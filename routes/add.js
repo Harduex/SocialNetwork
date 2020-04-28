@@ -13,10 +13,11 @@ router.get('/', function (request, response) {
 });
 
 router.post('/', upload.single('image'), function (request, response) {
+
     fs = require('fs');
 
     if (!request.file || !request.file.path) {
-        var encoded_image = "";
+        var encoded_image = "iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAYAAADFw8lbAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAAABPSURBVFhH7c6xEYBADMCwwErZfzZoGEHFc2c1bn3t7jM/cH89XqNao1qjWqNao1qjWqNao1qjWqNao1qjWqNao1qjWqNao1qjWqNao9bMC9ZQAewAppTcAAAAAElFTkSuQmCC";
     } else {
         //read file from user and save it to /photos
         var img = fs.readFileSync(request.file.path);
@@ -37,14 +38,13 @@ router.post('/', upload.single('image'), function (request, response) {
         //Saving photo 
         var fileName = request.body.title;
         decode_base64(encoded_image, fileName + '.jpg');
-        //var imgpath = path.join(__dirname, 'public/photos/') + fileName + '.jpg';
-
-
     });
-    if (!request.file || !request.file.path) {
-
-    } else {
-        fs.unlinkSync(request.file.path);
+    try {
+        if (request.file || request.file.path) {
+            fs.unlinkSync(request.file.path);
+        }
+    } catch (err) {
+        response.redirect("/");
     }
 
     response.redirect("/");
@@ -53,20 +53,20 @@ router.post('/', upload.single('image'), function (request, response) {
 
 function decode_base64(base64str, filename) {
     let buf = Buffer.from(base64str, 'base64');
-    let smallPhotoPath = path.join('./public/images/', filename.replace(/(\.[\w\d_-]+)$/i, '_small$1'));
-    let originalPhotoPath = path.join('./public/images/', filename);
+    let smallPhotoPath = './public/images/' + filename.replace(/(\.[\w\d_-]+)$/i, '_small$1');
+    let originalPhotoPath = './public/images/' + filename;
     const sharp = require('sharp');
 
     //Saving low quality photo
     sharp(buf)
         .resize(42)
         .rotate()
-        .toFile(smallPhotoPath, (err, info) => { if(err) console.log(info); });
+        .toFile(smallPhotoPath, (err, info) => { if (err) console.log(info); });
 
     sharp(buf)
         .resize(720)
         .rotate()
-        .toFile(originalPhotoPath, (err, info) => { if(err) console.log(info); });
+        .toFile(originalPhotoPath, (err, info) => { if (err) console.log(info); });
     //Saving original quality photo
     // fs.writeFile(originalPhotoPath, buf, function (error) {
     //     if (error) {
