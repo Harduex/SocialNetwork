@@ -9,10 +9,12 @@ var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017/";
 
 router.post('/', function (request, response) {
+
+    var username = request.user.profile.firstName;
     fs = require('fs');
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
-        var dbo = db.db("webAppData");
+        var dbo = db.db(username);
         var myquery = { title: request.body.post_title };
         dbo.collection("content").deleteOne(myquery, function (err, obj) {
             if (err) throw err;
@@ -21,10 +23,18 @@ router.post('/', function (request, response) {
         });
     });
 
-    let photo = './public/images/' + request.body.post_title + '.jpg';
-    let smallPhoto = './public/images/' + request.body.post_title + '_small.jpg';
-    fs.unlinkSync(photo);
-    fs.unlinkSync(smallPhoto);
+    let dir = `./public/images/${username}/`;
+    let filename = request.body.post_title;
+
+    if (!fs.existsSync(dir)){
+        fs.mkdirSync(dir);
+    }
+
+    let smallPhotoPath = dir + filename + '_small.jpg';
+    let originalPhotoPath = dir + filename + '.jpg';
+    
+    fs.unlinkSync(originalPhotoPath);
+    fs.unlinkSync(smallPhotoPath);
 
     response.redirect("/");
 

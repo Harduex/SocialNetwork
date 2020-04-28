@@ -14,6 +14,7 @@ router.get('/', function (request, response) {
 
 router.post('/', upload.single('image'), function (request, response) {
 
+    var username = request.user.profile.firstName;
     fs = require('fs');
 
     if (!request.file || !request.file.path) {
@@ -27,7 +28,7 @@ router.post('/', upload.single('image'), function (request, response) {
     //Upload file to database
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
-        var dbo = db.db("webAppData");
+        var dbo = db.db(username);
         var myobj = { title: request.body.title, photo: encoded_image, description: request.body.description };
         dbo.collection("content").insertOne(myobj, function (err, response) {
             if (err) throw err;
@@ -37,7 +38,7 @@ router.post('/', upload.single('image'), function (request, response) {
 
         //Saving photo 
         var fileName = request.body.title;
-        decode_base64(encoded_image, fileName + '.jpg');
+        decode_base64(encoded_image, fileName + '.jpg', username);
     });
     try {
         if (request.file || request.file.path) {
@@ -51,10 +52,20 @@ router.post('/', upload.single('image'), function (request, response) {
 
 });
 
-function decode_base64(base64str, filename) {
+function decode_base64(base64str, filename, username) {
     let buf = Buffer.from(base64str, 'base64');
-    let smallPhotoPath = './public/images/' + filename.replace(/(\.[\w\d_-]+)$/i, '_small$1');
-    let originalPhotoPath = './public/images/' + filename;
+
+    let dir = `./public/images/${username}/`;
+
+    if (!fs.existsSync(dir)){
+        fs.mkdirSync(dir);
+    }
+
+    let smallPhotoPath = dir + filename.replace(/(\.[\w\d_-]+)$/i, '_small$1');
+    let originalPhotoPath = dir + filename;
+
+    
+
     const sharp = require('sharp');
 
     //Saving low quality photo

@@ -9,6 +9,7 @@
 <body>
   <script src="javascripts/nav.js"></script>
   <br><br><br><br>
+  <h1>Welcome, <%= user.profile.firstName %></h1>
   <div class="form-container">
     <div class="post-div">
       <h1 class="mobile">Posts</h1>
@@ -30,7 +31,7 @@
       <p class="mobile"><b>Title: </b> <%=post.title%></p>
       <br>
       <!-- <img width="100%" src="data:image/jpeg;base64, <%=post.photo%>"> -->
-      <img class="lazy" width="100%" src="images/<%=post.title%>_small.jpg" data-src="images/<%=post.title%>.jpg">
+      <img class="lazy" width="100%" src="images/<%=user.profile.firstName%>/<%=post.title%>_small.jpg" data-src="images/<%=user.profile.firstName%>/<%=post.title%>.jpg">
       <!-- <img class="lazy" width="100%" src="photos/<%=post.title%>.jpg"> -->
       <br>
       <p class="mobile"><b>Description: </b><br> <%=post.description%></p>

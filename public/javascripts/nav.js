@@ -4,6 +4,8 @@ document.write(`<div class="topnav" id="myTopnav">
 <a href="javascript:void(0);" class="icon" onclick="mobileView()">
   <b class="mobile">☰</b>
 </a>
+<a class="right" href="/users/login">Log In / Register</a>
+<a class="right" href="/users/logout">Log Out</a>
 </div>`);
 
 function mobileView() {

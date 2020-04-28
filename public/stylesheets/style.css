@@ -121,6 +121,10 @@ hr {
   font-size: 17px;
 }
 
+.topnav a.right {
+  float: right;
+}
+
 .topnav a:hover {
   background-color: #ddd;
   color: black;

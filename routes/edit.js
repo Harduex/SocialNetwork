@@ -16,19 +16,26 @@ router.get('/', function (request, response) {
 
 router.post('/', upload.single('image'), function (request, response) {
 
+    var username = request.user.profile.firstName;
+    let dir = `./public/images/${username}/`;
+
+    if (!fs.existsSync(dir)){
+        fs.mkdirSync(dir);
+    }
+
     var TitleBefore = request.body.title_before;
     var Title = request.body.title;
     var Description = request.body.description;
 
-    var oldPhoto = './public/images/' + TitleBefore + '.jpg';
-    var oldSmallPhoto = './public/images/' + TitleBefore + '_small.jpg';
-    var newPhoto = './public/images/' + Title + '.jpg';
-    var newSmallPhoto = './public/images/' + Title + '_small.jpg';
+    var oldPhoto = dir + TitleBefore + '.jpg';
+    var oldSmallPhoto = dir + TitleBefore + '_small.jpg';
+    var newPhoto = dir + Title + '.jpg';
+    var newSmallPhoto = dir + Title + '_small.jpg';
 
     if (!request.file || !request.file.path) {
         MongoClient.connect(url, function (err, db) {
             if (err) throw err;
-            var dbo = db.db("webAppData");
+            var dbo = db.db(username);
             var myquery = { title: TitleBefore };
             var newvalues = { $set: { title: Title, description: Description } };
             dbo.collection("content").updateOne(myquery, newvalues, function (err, res) {
@@ -54,7 +61,7 @@ router.post('/', upload.single('image'), function (request, response) {
 
         MongoClient.connect(url, function (err, db) {
             if (err) throw err;
-            var dbo = db.db("webAppData");
+            var dbo = db.db(username);
             var myquery = { title: TitleBefore };
             var newvalues = { $set: { title: Title, photo: Photo, description: Description } };
             dbo.collection("content").updateOne(myquery, newvalues, function (err, res) {
@@ -63,7 +70,7 @@ router.post('/', upload.single('image'), function (request, response) {
                 db.close();
             });
         });
-        decode_base64(Photo, Title + '.jpg');
+        decode_base64(Photo, Title + '.jpg', username);
 
         //deleting temporary string for img convertion
         fs.unlinkSync(request.file.path);
@@ -77,22 +84,40 @@ router.post('/', upload.single('image'), function (request, response) {
 
 });
 
-function decode_base64(base64str, filename) {
+function decode_base64(base64str, filename, username) {
     let buf = Buffer.from(base64str, 'base64');
-    let smallPhotoPath = './public/images/' + filename.replace(/(\.[\w\d_-]+)$/i, '_small$1');
-    let originalPhotoPath = './public/images/' + filename;
+
+    let dir = `./public/images/${username}/`;
+
+    if (!fs.existsSync(dir)){
+        fs.mkdirSync(dir);
+    }
+
+    let smallPhotoPath = dir + filename.replace(/(\.[\w\d_-]+)$/i, '_small$1');
+    let originalPhotoPath = dir + filename;
+
+    
+
     const sharp = require('sharp');
 
     //Saving low quality photo
     sharp(buf)
         .resize(42)
         .rotate()
-        .toFile(smallPhotoPath, (err, info) => { console.log(err) });
-    //Saving high quality photo
+        .toFile(smallPhotoPath, (err, info) => { if (err) console.log(info); });
+
     sharp(buf)
         .resize(720)
         .rotate()
-        .toFile(originalPhotoPath, (err, info) => { console.log(err) });
+        .toFile(originalPhotoPath, (err, info) => { if (err) console.log(info); });
+    //Saving original quality photo
+    // fs.writeFile(originalPhotoPath, buf, function (error) {
+    //     if (error) {
+    //         throw error;
+    //     } else {
+
+    //     }
+    // });
 }
 
 module.exports = router;
