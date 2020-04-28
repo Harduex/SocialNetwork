@@ -1,0 +1,93 @@
+<html>
+
+<head>
+  <title>Posts</title>
+  <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+  <!-- <script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js"></script> -->
+</head>
+
+<body>
+  <script src="javascripts/nav.js"></script>
+  <br><br><br><br>
+  <div class="form-container">
+    <div class="post-div">
+      <h1 class="mobile">Posts</h1>
+      <div class="btn-conatiner">
+        <hr>
+        <form action="/add" method="get">
+          <input type="submit" name="add" value="add" class="mobile btn-sub input-div" />
+        </form>
+
+        <form action="/clear" method="post">
+          <input type="submit" name="clear" value="Clear all" class="mobile btn-sub input-div" />
+        </form>
+        <hr>
+      </div>
+    </div>
+
+    <% content.reverse().forEach(function(post) { %>
+    <div class="post-div">
+      <p class="mobile"><b>Title: </b> <%=post.title%></p>
+      <br>
+      <!-- <img width="100%" src="data:image/jpeg;base64, <%=post.photo%>"> -->
+      <img class="lazy" width="100%" src="images/<%=post.title%>_small.jpg" data-src="images/<%=post.title%>.jpg">
+      <!-- <img class="lazy" width="100%" src="photos/<%=post.title%>.jpg"> -->
+      <br>
+      <p class="mobile"><b>Description: </b><br> <%=post.description%></p>
+      <div class="btn-conatiner">
+        <hr>
+        <form method="POST" action="/delete">
+          <input type="hidden" name="post_title" value="<%=post.title%>" />
+          <input type="submit" class="mobile input-div" value="Delete" />
+        </form>
+
+        <form method="get" action="/edit">
+          <input type="hidden" name="post_title" value="<%=post.title%>" />
+          <input type="hidden" name="post_description" value="<%=post.description%>" />
+          <input type="submit" class="mobile input-div" value="Edit" />
+        </form>
+        <hr>
+      </div>
+    </div>
+    <% }); %>
+
+  </div>
+
+  <script>
+    //lazyload();
+    document.addEventListener("DOMContentLoaded", function () {
+      var lazyloadImages = document.querySelectorAll("img.lazy");
+      var lazyloadThrottleTimeout;
+
+      function lazyload() {
+        if (lazyloadThrottleTimeout) {
+          clearTimeout(lazyloadThrottleTimeout);
+        }
+
+        lazyloadThrottleTimeout = setTimeout(function () {
+          var scrollTop = window.pageYOffset;
+          lazyloadImages.forEach(function (img) {
+            if (img.offsetTop < (window.innerHeight + scrollTop)) {
+              img.src = img.dataset.src;
+              img.classList.remove('lazy');
+            }
+          });
+          if (lazyloadImages.length == 0) {
+            document.removeEventListener("scroll", lazyload);
+            window.removeEventListener("resize", lazyload);
+            window.removeEventListener("orientationChange", lazyload);
+            window.removeEventListener("load", lazyload);
+          }
+        }, 20);
+      }
+
+      document.addEventListener("scroll", lazyload);
+      window.addEventListener("resize", lazyload);
+      window.addEventListener("orientationChange", lazyload);
+      window.addEventListener("load", lazyload);
+    });
+  </script>
+
+</body>
+
+</html>
