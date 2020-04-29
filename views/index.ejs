@@ -31,19 +31,22 @@
       <p class="mobile"><b>Title: </b> <%=post.title%></p>
       <br>
       <!-- <img width="100%" src="data:image/jpeg;base64, <%=post.photo.encoded%>"> -->
-      <img class="lazy" width="100%" src="images/<%=user.profile.firstName%>/<%=post.photo.name%>_small.jpg" 
-      data-src="images/<%=user.profile.firstName%>/<%=post.photo.name%>.jpg">
+      <img class="lazy" width="100%" src="images/<%=user.id%>/<%=post.photo.name%>_small.jpg" 
+      data-src="images/<%=user.id%>/<%=post.photo.name%>.jpg">
       <!-- <img class="lazy" width="100%" src="photos/<%=post.title%>.jpg"> -->
       <br>
       <p class="mobile"><b>Description: </b><br> <%=post.description%></p>
       <div class="btn-conatiner">
         <hr>
-        <form method="POST" action="/delete">
+        <form method="POST" action="/delete">         
+          <input type="hidden" name="post_id" value="<%=post.postid%>" />
+          <input type="hidden" name="photo_name" value="<%=post.photo.name%>" />
           <input type="hidden" name="post_title" value="<%=post.title%>" />
           <input type="submit" class="mobile input-div" value="Delete" />
         </form>
 
         <form method="get" action="/edit">
+          <input type="hidden" name="post_id" value="<%=post.postid%>" />
           <input type="hidden" name="photo_name" value="<%=post.photo.name%>" />
           <input type="hidden" name="post_title" value="<%=post.title%>" />
           <input type="hidden" name="post_description" value="<%=post.description%>" />

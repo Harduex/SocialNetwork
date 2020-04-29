@@ -11,11 +11,11 @@ var url = "mongodb://localhost:27017/";
 
 router.post('/', function (request, response) {
 
-    var username = request.user.profile.firstName;
+    var userId = request.user.id;
     fs = require('fs');
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
-        var dbo = db.db(username);
+        var dbo = db.db(userId);
         dbo.collection("content").deleteMany(function (err, obj) {
             if (err) throw err;
             console.log("all documents in collection deleted");
@@ -23,7 +23,7 @@ router.post('/', function (request, response) {
         });
     });
 
-    let dir = `./public/images/${username}/`;
+    let dir = `./public/images/${userId}/`;
 
     if (!fs.existsSync(dir)){
         fs.mkdirSync(dir);

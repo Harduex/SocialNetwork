@@ -4,7 +4,7 @@ var router = express.Router();
 var multer = require('multer');
 const upload = multer({ dest: './public/images' });
 
-const rand = require('../random');
+const functions = require('../functions');
 
 var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017/";
@@ -15,7 +15,9 @@ router.get('/', function (request, response) {
 
 router.post('/', upload.single('image'), function (request, response) {
 
-    var username = request.user.profile.firstName;
+    var userId = request.user.id;
+    var postId = functions.random(60);
+
     fs = require('fs');
 
     if (!request.file || !request.file.path) {
@@ -25,12 +27,20 @@ router.post('/', upload.single('image'), function (request, response) {
         var img = fs.readFileSync(request.file.path);
         var encoded_image = img.toString('base64');
     }
-    var randomStr = rand.random(50);
+    var randomStr = functions.random(20);
     //Upload file to database
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
-        var dbo = db.db(username);
-        var myobj = { title: request.body.title, photo: { encoded: encoded_image, name: randomStr }, description: request.body.description };
+        var dbo = db.db(userId);
+        var myobj = {
+            title: request.body.title,
+            photo: {
+                encoded: encoded_image,
+                name: randomStr
+            },
+            description: request.body.description,
+            postid: postId
+        };
         dbo.collection("content").insertOne(myobj, function (err, response) {
             if (err) throw err;
             console.log("1 document inserted");
@@ -38,12 +48,8 @@ router.post('/', upload.single('image'), function (request, response) {
         });
 
         var fileName = randomStr;
-        decode_base64(encoded_image, fileName + '.jpg', username);
+        functions.decode_save_base64(encoded_image, fileName + '.jpg', userId);
 
-        //Saving photo 
-        //rand.random(10);
-        //var fileName = request.body.title;
-        //decode_base64(encoded_image, fileName + '.jpg', username);
     });
     try {
         if (request.file || request.file.path) {
@@ -57,40 +63,5 @@ router.post('/', upload.single('image'), function (request, response) {
 
 });
 
-function decode_base64(base64str, filename, username) {
-    let buf = Buffer.from(base64str, 'base64');
-
-    let dir = `./public/images/${username}/`;
-
-    if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir);
-    }
-
-    let smallPhotoPath = dir + filename.replace(/(\.[\w\d_-]+)$/i, '_small$1');
-    let originalPhotoPath = dir + filename;
-
-
-
-    const sharp = require('sharp');
-
-    //Saving low quality photo
-    sharp(buf)
-        .resize(42)
-        .rotate()
-        .toFile(smallPhotoPath, (err, info) => { if (err) console.log(info); });
-
-    sharp(buf)
-        .resize(720)
-        .rotate()
-        .toFile(originalPhotoPath, (err, info) => { if (err) console.log(info); });
-    //Saving original quality photo
-    // fs.writeFile(originalPhotoPath, buf, function (error) {
-    //     if (error) {
-    //         throw error;
-    //     } else {
-
-    //     }
-    // });
-}
 
 module.exports = router;

@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-var path = require('path');
+const functions = require('../functions');
 var multer = require('multer');
 fs = require('fs');
 const upload = multer({ dest: './public/images' });
@@ -16,12 +16,14 @@ router.get('/', function (request, response) {
 
 router.post('/', upload.single('image'), function (request, response) {
 
-    var username = request.user.profile.firstName;
-    let dir = `./public/images/${username}/`;
+    var userId = request.user.id;
+    let dir = `./public/images/${userId}/`;
 
     if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir);
     }
+    var postId = request.body.post_id;
+
     var PhotoName = request.body.photo_name;
     var TitleBefore = request.body.title_before;
     var Title = request.body.title;
@@ -35,8 +37,8 @@ router.post('/', upload.single('image'), function (request, response) {
     if (!request.file || !request.file.path) {
         MongoClient.connect(url, function (err, db) {
             if (err) throw err;
-            var dbo = db.db(username);
-            var myquery = { title: TitleBefore };
+            var dbo = db.db(userId);
+            var myquery = { posid: postId };
             var newvalues = { $set: { title: Title, description: Description } };
             dbo.collection("content").updateOne(myquery, newvalues, function (err, res) {
                 if (err) throw err;
@@ -62,8 +64,8 @@ router.post('/', upload.single('image'), function (request, response) {
 
         MongoClient.connect(url, function (err, db) {
             if (err) throw err;
-            var dbo = db.db(username);
-            var myquery = { title: TitleBefore };
+            var dbo = db.db(userId);
+            var myquery = { postid: postId };
             var newvalues = { $set: { title: Title, photo: { encoded: Photo, name: PhotoName }, description: Description } };
             dbo.collection("content").updateOne(myquery, newvalues, function (err, res) {
                 if (err) throw err;
@@ -73,7 +75,7 @@ router.post('/', upload.single('image'), function (request, response) {
         });
         fs.unlinkSync(oldPhoto);
         fs.unlinkSync(oldSmallPhoto);
-        decode_base64(Photo, PhotoName + '.jpg', username);
+        functions.decode_save_base64(Photo, PhotoName + '.jpg', userId);
 
         //deleting temporary string for img convertion
 
@@ -87,33 +89,5 @@ router.post('/', upload.single('image'), function (request, response) {
 
 });
 
-function decode_base64(base64str, filename, username) {
-    let buf = Buffer.from(base64str, 'base64');
-
-    let dir = `./public/images/${username}/`;
-
-    if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir);
-    }
-
-    let smallPhotoPath = dir + filename.replace(/(\.[\w\d_-]+)$/i, '_small$1');
-    let originalPhotoPath = dir + filename;
-
-
-
-    const sharp = require('sharp');
-
-    //Saving low quality photo
-    sharp(buf)
-        .resize(42)
-        .rotate()
-        .toFile(smallPhotoPath, (err, info) => { if (err) console.log(info); });
-
-    sharp(buf)
-        .resize(720)
-        .rotate()
-        .toFile(originalPhotoPath, (err, info) => { if (err) console.log(info); });
-
-}
 
 module.exports = router;

@@ -20,7 +20,7 @@ router.get("/logout", (req, res) => {
 });
 
 router.get('/info', (req, res) => {
-  res.json({ profile: req.user ? req.user.profile : null });
+  res.json({ user: req.user ? req.user : null });
 });
 
 
