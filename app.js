@@ -46,7 +46,9 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(express.static('./public'));
+
 app.use(session({
   secret: 'jFJhJsh7hSfh78h78t6bg6b67bJJYNdfjFg896Fedrc5fdl',
   resave: true,
@@ -57,7 +59,6 @@ app.use((req, res, next) => {
   if (!req.userinfo) {
     return next();
   }
-
   oktaClient.getUser(req.userinfo.sub)
     .then(user => {
       req.user = user;
@@ -75,12 +76,12 @@ function loginRequired(req, res, next) {
   next();
 }
 
-app.use('/',loginRequired ,indexRouter);
-app.use('/add', addRouter);
-app.use('/edit', editRouter);
-app.use('/delete', deleteRouter);
-app.use('/clear', clearRouter);
-app.use('/users', usersRouter);
+app.use('/', loginRequired ,indexRouter);
+app.use('/add', loginRequired, addRouter);
+app.use('/edit', loginRequired, editRouter);
+app.use('/delete', loginRequired, deleteRouter);
+app.use('/clear', loginRequired, clearRouter);
+app.use('/users', loginRequired, usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -11,6 +11,8 @@
 const express = require("express");
 const router = express.Router();
 
+var usr;
+
 // Log a user out
 router.get("/logout", (req, res) => {
   req.logout();
@@ -20,5 +22,7 @@ router.get("/logout", (req, res) => {
 router.get('/info', (req, res) => {
   res.json({ profile: req.user ? req.user.profile : null });
 });
+
+
 
 module.exports = router;

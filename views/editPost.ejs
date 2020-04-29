@@ -13,6 +13,7 @@
 
         <form action="/edit" enctype="multipart/form-data" method="post">
             <input type="hidden" name="title_before" id="titl_bfr" />
+            <input type="hidden" name="photo_name" id="pht" />
             <input class="mobile input-div" placeholder="Title" type="text" name="title" id="titl" />
             <br>
             <textarea rows="4" cols="50" class="mobile input-div" placeholder="Description" type="text" name="description" id="desc"></textarea>
@@ -36,6 +37,7 @@
         document.getElementById("desc").value = urlParams.get("post_description");
 
         document.getElementById("titl_bfr").value = urlParams.get("post_title");
+        document.getElementById("pht").value = urlParams.get("photo_name");
     </script>
 </body>
 

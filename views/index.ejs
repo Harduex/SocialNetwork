@@ -30,8 +30,9 @@
     <div class="post-div">
       <p class="mobile"><b>Title: </b> <%=post.title%></p>
       <br>
-      <!-- <img width="100%" src="data:image/jpeg;base64, <%=post.photo%>"> -->
-      <img class="lazy" width="100%" src="images/<%=user.profile.firstName%>/<%=post.title%>_small.jpg" data-src="images/<%=user.profile.firstName%>/<%=post.title%>.jpg">
+      <!-- <img width="100%" src="data:image/jpeg;base64, <%=post.photo.encoded%>"> -->
+      <img class="lazy" width="100%" src="images/<%=user.profile.firstName%>/<%=post.photo.name%>_small.jpg" 
+      data-src="images/<%=user.profile.firstName%>/<%=post.photo.name%>.jpg">
       <!-- <img class="lazy" width="100%" src="photos/<%=post.title%>.jpg"> -->
       <br>
       <p class="mobile"><b>Description: </b><br> <%=post.description%></p>
@@ -43,6 +44,7 @@
         </form>
 
         <form method="get" action="/edit">
+          <input type="hidden" name="photo_name" value="<%=post.photo.name%>" />
           <input type="hidden" name="post_title" value="<%=post.title%>" />
           <input type="hidden" name="post_description" value="<%=post.description%>" />
           <input type="submit" class="mobile input-div" value="Edit" />
@@ -50,6 +52,7 @@
         <hr>
       </div>
     </div>
+    <!-- <h1><%=post.photo.name%></h1> -->
     <% }); %>
 
   </div>

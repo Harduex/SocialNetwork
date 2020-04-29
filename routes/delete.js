@@ -15,6 +15,23 @@ router.post('/', function (request, response) {
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
         var dbo = db.db(username);
+
+        var myquery = { title: request.body.post_title };
+        dbo.collection("content").findOne(myquery, function (err, result) {
+            if (err) throw err;
+            let dir = `./public/images/${username}/`;
+            var fileName = result.photo.name;
+            if (!fs.existsSync(dir)){
+                fs.mkdirSync(dir);
+            }
+        
+            let smallPhotoPath = dir + fileName + '_small.jpg';
+            let originalPhotoPath = dir + fileName + '.jpg';
+    
+            fs.unlinkSync(originalPhotoPath);
+            fs.unlinkSync(smallPhotoPath);
+        });
+
         var myquery = { title: request.body.post_title };
         dbo.collection("content").deleteOne(myquery, function (err, obj) {
             if (err) throw err;
@@ -22,19 +39,6 @@ router.post('/', function (request, response) {
             db.close();
         });
     });
-
-    let dir = `./public/images/${username}/`;
-    let filename = request.body.post_title;
-
-    if (!fs.existsSync(dir)){
-        fs.mkdirSync(dir);
-    }
-
-    let smallPhotoPath = dir + filename + '_small.jpg';
-    let originalPhotoPath = dir + filename + '.jpg';
-    
-    fs.unlinkSync(originalPhotoPath);
-    fs.unlinkSync(smallPhotoPath);
 
     response.redirect("/");
 

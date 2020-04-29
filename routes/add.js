@@ -1,9 +1,10 @@
 var express = require('express');
 var router = express.Router();
 
-var path = require('path');
 var multer = require('multer');
 const upload = multer({ dest: './public/images' });
+
+const rand = require('../random');
 
 var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017/";
@@ -24,21 +25,25 @@ router.post('/', upload.single('image'), function (request, response) {
         var img = fs.readFileSync(request.file.path);
         var encoded_image = img.toString('base64');
     }
-
+    var randomStr = rand.random(50);
     //Upload file to database
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
         var dbo = db.db(username);
-        var myobj = { title: request.body.title, photo: encoded_image, description: request.body.description };
+        var myobj = { title: request.body.title, photo: { encoded: encoded_image, name: randomStr }, description: request.body.description };
         dbo.collection("content").insertOne(myobj, function (err, response) {
             if (err) throw err;
             console.log("1 document inserted");
             db.close();
         });
 
-        //Saving photo 
-        var fileName = request.body.title;
+        var fileName = randomStr;
         decode_base64(encoded_image, fileName + '.jpg', username);
+
+        //Saving photo 
+        //rand.random(10);
+        //var fileName = request.body.title;
+        //decode_base64(encoded_image, fileName + '.jpg', username);
     });
     try {
         if (request.file || request.file.path) {
@@ -57,14 +62,14 @@ function decode_base64(base64str, filename, username) {
 
     let dir = `./public/images/${username}/`;
 
-    if (!fs.existsSync(dir)){
+    if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir);
     }
 
     let smallPhotoPath = dir + filename.replace(/(\.[\w\d_-]+)$/i, '_small$1');
     let originalPhotoPath = dir + filename;
 
-    
+
 
     const sharp = require('sharp');
 

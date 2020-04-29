@@ -24,6 +24,4 @@ router.get('/', function (request, response) {
     console.log("User logged in: " + username);
 });
 
-
-
 module.exports = router;
