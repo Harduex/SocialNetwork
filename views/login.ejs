@@ -19,7 +19,7 @@
             <br>
             <input class="mobile input-div" placeholder="Password" type="password" name="password" />
             <br>
-            <input class="mobile input-div" type="submit" value="Log In" />
+            <input class="mobile input-div" id="login" type="submit" value="Log In" />
 
         </form>
         <br>
@@ -27,4 +27,8 @@
             <input class="mobile input-div" type="submit" value="Register" />
         </form>
     </div>
+    <script>
+        var target = document.getElementById('target');
+        target.innerHTML = 'Log in';
+    </script>
 </body>

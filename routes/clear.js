@@ -24,10 +24,10 @@ router.post('/', function (request, response) {
         });
     });
 
-    let dir = `./public/images/${userId}/`;
+    let dir = `./public/users/${userId}/images/`;
 
     if (!fs.existsSync(dir)){
-        fs.mkdirSync(dir);
+        fs.mkdirSync(dir, { recursive: true });
     }
 
     fs.readdir(dir, (err, files) => {

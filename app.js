@@ -67,7 +67,7 @@ app.get('/login', checkNotAuthenticated, function (request, response) {
         db.close();
     });
   });
-  response.render('login.ejs');
+  response.render('login.ejs', { req: request });
 });
 
 app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
@@ -91,6 +91,13 @@ app.use((req, res, next) => {
   res.locals.user = req.user;
   console.log(req.user);
   next();
+});
+
+app.use( function( req, res, next ) {
+  if ( req.query._method == 'DELETE' ) {
+      req.method = 'DELETE';
+  }       
+  next(); 
 });
 
 app.delete('/logout', (reqest, response)=>{

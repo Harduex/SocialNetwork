@@ -36,7 +36,7 @@ router.post('/', upload.single('image'), function (request, response) {
     Title = request.body.title;
     Description = request.body.description;
 
-    let dir = `./public/images/${userId}/`;
+    let dir = `./public/users/${userId}/images/`;
 
     if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir);

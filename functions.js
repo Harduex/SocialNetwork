@@ -11,7 +11,7 @@ module.exports = {
    decode_save_base64: function (base64str, filename, username) {
       let buf = Buffer.from(base64str, 'base64');
 
-      let dir = `./public/images/${username}/`;
+      let dir = `./public/users/${username}/images/`;
 
       if (!fs.existsSync(dir)) {
          fs.mkdirSync(dir);
@@ -46,7 +46,7 @@ module.exports = {
    saveProfilePic: function (base64str, userId) {
       let buf = Buffer.from(base64str, 'base64');
 
-      let photoPath = `./public/images/${userId}/profilePic/image.jpg`;
+      let photoPath = `./public/users/${userId}/images/profilePic/image.jpg`;
 
       if (!fs.existsSync(photoPath)) {
          fs.mkdirSync(photoPath);
@@ -67,7 +67,7 @@ module.exports = {
    },
    checkProfilePic: function (userId) {
 
-      let photoPath = `./public/images/${userId}/profilePic/`;
+      let photoPath = `./public/users/${userId}/images/profilePic/`;
 
       if (!fs.existsSync(photoPath)) {
          fs.mkdirSync(photoPath, {recursive: true});

@@ -21,7 +21,7 @@ router.post('/', function (request, response) {
         //console.log('POST ID:' + request.body.post_id);
 
         var postId = request.body.post_id;
-        let dir = `./public/images/${userId}/`;
+        let dir = `./public/users/${userId}/images/`;
         var fileName = request.body.photo_name;
 
         if (!fs.existsSync(dir)) {
