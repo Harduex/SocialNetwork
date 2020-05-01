@@ -25,7 +25,7 @@ var addRouter = require('./routes/add');
 var editRouter = require('./routes/edit');
 var deleteRouter = require('./routes/delete');
 var clearRouter = require('./routes/clear');
-// var usersRouter = require('./routes/users');
+var searchRouter = require('./routes/search');
 var changeProfilePicRouter = require('./routes/changeProfilePic');
 //var loginRouter = require('./routes/login');
 var registrationRouter = require('./routes/register');
@@ -83,7 +83,7 @@ app.use('/add', checkAuthenticated, addRouter);
 app.use('/edit', checkAuthenticated, editRouter);
 app.use('/delete', checkAuthenticated, deleteRouter);
 app.use('/clear', checkAuthenticated, clearRouter);
-// app.use('/users', checkAuthenticated, usersRouter);
+app.use('/search', checkAuthenticated, searchRouter);
 
 
 app.use((req, res, next) => {

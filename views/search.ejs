@@ -9,31 +9,12 @@
   <script src="javascripts/nav.js"></script>
   <br><br><br><br>
 
-  <div class="form-container">
-    <div class="post-div">
-      <h1 class="mobile"><%= user.username %></h1>
-
-      <div class="btn-conatiner">
-        <hr>
-        <form action="/add" method="get">
-          <input type="submit" name="add" value="add" class="mobile btn-sub input-div" />
-        </form>
-
-        <form action="/clear" method="post">
-          <input type="submit" name="clear" value="Clear all" class="mobile btn-sub input-div" />
-        </form>
-        <hr>
-      </div>
-    </div>
-
     <% content.reverse().forEach(function(post) { %>
     <div class="post-div">
 
       <div class="user-info mobile">
         <hr>
-        <a href="/changeProfilePic">
           <img class="profile-pic" width="12%" src="users/<%=user.id%>/images/profilePic/image.jpg">
-        </a>
         <p class="profile-name"><%= user.username %></p>
         <hr>
       </div>
@@ -46,18 +27,14 @@
 
       <div class="btn-conatiner">
         <hr>
-        <form method="POST" action="/delete">
+        <form method="POST" action="/comment">
           <input type="hidden" name="post_id" value="<%=post.postid%>" />
-          <input type="hidden" name="photo_name" value="<%=post.photo%>" />
-          <input type="submit" class="mobile input-div" value="Delete" />
+          <input type="submit" class="mobile input-div" value="Comment" />
         </form>
 
-        <form method="get" action="/edit">
+        <form method="get" action="/like">
           <input type="hidden" name="post_id" value="<%=post.postid%>" />
-          <input type="hidden" name="photo_name" value="<%=post.photo%>" />
-          <input type="hidden" name="post_title" value="<%=post.title%>" />
-          <input type="hidden" name="post_description" value="<%=post.description%>" />
-          <input type="submit" class="mobile input-div" value="Edit" />
+          <input type="submit" class="mobile input-div" value="Like" />
         </form>
         <hr>
       </div>

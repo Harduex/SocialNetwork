@@ -38,7 +38,8 @@ router.post('/', upload.single('image'), function (request, response) {
             title: request.body.title,
             photo: randomStr,
             description: request.body.description,
-            postid: postId
+            postid: postId,
+            user: request.user.username
         };
 
         dbo.collection(userId).insertOne(myobj, function (err, response) {

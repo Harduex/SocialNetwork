@@ -16,6 +16,26 @@ body {
   transition: ease-out 0.15s;
 }
 
+.input-div-search { 
+  width: 80%;
+  padding: 2px 2px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  transition: ease-out 0.15s;
+}
+
+.input-div-button { 
+  width: 15%;
+  padding: 2px 2px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  transition: ease-out 0.15s;
+}
+
 p {
   word-wrap: break-word;
 }
@@ -120,7 +140,11 @@ hr {
   top: 0;
 }
 
-/* Nav bar start */
+.file-form {
+  width: 70px; 
+  height: 48px;
+  margin: 10px 8px 0 8px;
+}/* Nav bar start */
 .topnav {
   overflow: hidden;
   background-color: #333;
@@ -143,21 +167,19 @@ hr {
 
 .topnav a.right {
   float: right;
+  padding: 14px 14px 0 0;
+}
+.topnav a.right-only {
+  float: right;
 }
 
-.topnav a:hover {
+/* .topnav a:hover {
   background-color: #ddd;
   color: black;
-}
+} */
 
 .topnav .icon {
   display: none;
-}
-
-.file-form {
-  width: 70px; 
-  height: 48px;
-  margin: 10px 8px 0 8px;
 }
 
 @media screen and (max-width: 1000px) {
@@ -182,7 +204,7 @@ hr {
   .topnav a, .mobile {
     font-size: 55px;
     padding: 10px 17px 3px 20px;
-    margin: 1% 0 1.5% 0;
+    margin: 1% 1% 1% 1%;
   }
 
   .mobile {
