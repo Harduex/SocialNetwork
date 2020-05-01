@@ -1,0 +1,28 @@
+<!doctype html>
+
+<head>
+  <title>Add post</title>
+  <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+</head>
+
+<body>
+  <script src="javascripts/nav.js"></script>
+  <br><br><br>
+  <div class="form-container">
+    <h1 class="mobile">Add post</h1>
+    <form action="/add" enctype="multipart/form-data" method="post">
+      <input class="mobile input-div" placeholder="Title" type="text" name="title" />
+      <br>
+      <textarea rows="4" cols="50" class="mobile input-div" placeholder="Description" type="text" name="description"></textarea>
+      <br>
+      <label class="fileContainer mobile input-div">
+        <p>Select image..</p>
+        <input class="mobile" type="file" accept="image/*" name="image">
+      </label>
+      <br>
+      <input class="mobile input-div" type="submit" />
+    </form>
+  </div>
+</body>
+
+</html>
