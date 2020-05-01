@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var multer = require('multer');
-const upload = multer({ dest: './public/images' });
+const upload = multer({ dest: './public/temp' });
 
 const functions = require('../functions');
 
@@ -33,7 +33,7 @@ router.post('/', upload.single('image'), function (request, response) {
     //Upload file to database
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
-        var dbo = db.db(userId);
+        var dbo = db.db('UsersData');
         var myobj = {
             title: request.body.title,
             photo: randomStr,
@@ -41,7 +41,7 @@ router.post('/', upload.single('image'), function (request, response) {
             postid: postId
         };
 
-        dbo.collection("content").insertOne(myobj, function (err, response) {
+        dbo.collection(userId).insertOne(myobj, function (err, response) {
             if (err) throw err;
             console.log("1 document inserted");
             db.close();

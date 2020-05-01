@@ -67,7 +67,7 @@ app.get('/login', checkNotAuthenticated, function (request, response) {
         db.close();
     });
   });
-  response.render('login.ejs', { req: request });
+  response.render('login.ejs');
 });
 
 app.post('/login', checkNotAuthenticated, passport.authenticate('local', {

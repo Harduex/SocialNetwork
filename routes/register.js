@@ -16,6 +16,14 @@ router.get('/', function (request, response) {
 router.post('/', async (request, response) => {
 
     let userId = functions.random(20);
+
+    //Validate username
+    //request.body.username
+
+    //Validate password
+    //request.body.password
+
+
     try {
         const hashedPassword = await bcrypt.hash(request.body.password, 10);
         MongoClient.connect(url, function (err, db) {

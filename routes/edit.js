@@ -11,7 +11,7 @@ var router = express.Router();
 const functions = require('../functions');
 var multer = require('multer');
 fs = require('fs');
-const upload = multer({ dest: './public/images' });
+const upload = multer({ dest: './public/temp' });
 
 var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017/";
@@ -45,10 +45,10 @@ router.post('/', upload.single('image'), function (request, response) {
     if (!request.file || !request.file.path) {
         MongoClient.connect(url, function (err, db) {
             if (err) throw err;
-            var dbo = db.db(userId);
+            var dbo = db.db('UsersData');
             var myquery = { postid: postId };
             var newvalues = { $set: { title: Title, description: Description } };
-            dbo.collection("content").updateOne(myquery, newvalues, function (err, res) {
+            dbo.collection(userId).updateOne(myquery, newvalues, function (err, res) {
                 if (err) throw err;
                 console.log("1 document updated");
                 db.close();
@@ -63,10 +63,10 @@ router.post('/', upload.single('image'), function (request, response) {
 
         MongoClient.connect(url, function (err, db) {
             if (err) throw err;
-            var dbo = db.db(userId);
+            var dbo = db.db('UsersData');
             var myquery = { postid: postId };
             var newvalues = { $set: { title: Title, description: Description } };
-            dbo.collection("content").updateOne(myquery, newvalues, function (err, res) {
+            dbo.collection(userId).updateOne(myquery, newvalues, function (err, res) {
                 if (err) throw err;
                 console.log("1 document updated");
                 db.close();

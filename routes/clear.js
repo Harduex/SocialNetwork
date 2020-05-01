@@ -3,7 +3,7 @@ var router = express.Router();
 
 var path = require('path');
 var multer = require('multer');
-const upload = multer({ dest: './public/images' });
+const upload = multer({ dest: './public/temp' });
 
 var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017/";
@@ -16,8 +16,8 @@ router.post('/', function (request, response) {
 
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
-        var dbo = db.db(userId);
-        dbo.collection("content").deleteMany(function (err, obj) {
+        var dbo = db.db('UsersData');
+        dbo.collection(userId).deleteMany(function (err, obj) {
             if (err) throw err;
             console.log("all documents in collection deleted");
             db.close();
