@@ -1,7 +1,7 @@
 <html>
 
 <head>
-  <title>Posts</title>
+  <title>Profile</title>
   <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
 </head>
 
@@ -34,7 +34,9 @@
         <a href="/changeProfilePic">
           <img class="profile-pic" width="12%" src="users/<%=user.id%>/images/profilePic/image.jpg">
         </a>
-        <p class="profile-name"><%= user.username %></p>
+        <div>
+          <p class="profile-name"><%= user.username %></p>
+        </div>
         <hr>
       </div>
 
@@ -42,8 +44,12 @@
       <img class="lazy post-img" src="users/<%=user.id%>/images/<%=post.photo%>_small.jpg"
         data-src="users/<%=user.id%>/images/<%=post.photo%>.jpg">
       <br>
-      <p class="mobile"><%=post.description%></p>
-
+      <div class="post-desc">
+        <p class="mobile"><b><%=post.description%></b></p>
+        <p class="mobile-p-date"><%= post.dateAdded %></p>
+        <p class="mobile-p-likes"><b>Likes:</b> <%= post.likes %></p>
+      </div>
+      
       <div class="btn-conatiner">
         <hr>
         <form method="POST" action="/delete">

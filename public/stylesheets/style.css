@@ -38,6 +38,7 @@ body {
 
 p {
   word-wrap: break-word;
+  font-size: 100%;
 }
 input:hover {
   filter: brightness(90%);
@@ -67,8 +68,9 @@ input[type=submit]:hover {
   height: auto;
 }
 
-.user-info {
-  font-size: 25px;
+.post-desc {
+  text-align: left;
+  padding-left: 25px;
 }
 
 .profile-pic {
@@ -80,6 +82,7 @@ input[type=submit]:hover {
 .profile-name {
   float: left;
   color: #b0b3b8;
+  padding-top: 1%;
 }
 
 h1 {
@@ -182,6 +185,16 @@ hr {
   display: none;
 }
 
+.mobile-p-likes {
+  padding-right: 40px;
+  float: right;
+}
+
+.mobile-p-date {
+  padding-left: 0;
+  float: left;
+}
+
 @media screen and (max-width: 1000px) {
   .topnav a:not(:first-child) {display: none;}
   .topnav a.icon {
@@ -202,13 +215,28 @@ hr {
     width: 100%;
   }
   .topnav a, .mobile {
-    font-size: 55px;
-    padding: 10px 17px 3px 20px;
+    font-size: 45px;
+    padding: 10px 17px 3px 0;
     margin: 1% 1% 1% 1%;
   }
 
   .mobile {
     width: 98%;
+  }
+
+  .mobile-p {
+    font-size: 160%;
+    padding-left: 10px;
+  }  
+
+  .mobile-p-likes {
+    padding-right: 40px;
+    font-size: 200%;
+  }  
+
+  .mobile-p-date {
+    padding-left: 15px;
+    font-size: 200%;
   }
 
   input[type=submit] {
