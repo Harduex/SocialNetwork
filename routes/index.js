@@ -13,7 +13,7 @@ router.get('/', function (request, response) {
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
         var dbo = db.db('UsersData');
-        dbo.collection(userId).find({}).toArray(function (err, content) {
+        dbo.collection(userId+'_posts').find({}).toArray(function (err, content) {
             if (err) throw err;
             
             response.render('index.ejs', { content: content,

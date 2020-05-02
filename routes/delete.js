@@ -37,7 +37,7 @@ router.post('/', function (request, response) {
         var myquery = { postid: postId };
         //var myquery = { title: request.body.post_title };
 
-        dbo.collection(userId).deleteOne(myquery, function (err, obj) {
+        dbo.collection(userId+'_posts').deleteOne(myquery, function (err, obj) {
             if (err) throw err;
             console.log("1 document deleted");
             db.close();

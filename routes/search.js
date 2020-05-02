@@ -26,14 +26,30 @@ router.get('/', function (request, response) {
 
                     console.log(usr);
 
-                    db.db("UsersData").collection(usr.id).find({ user: user[0].username }).toArray(function (err, content) {
+                    db.db("UsersData").collection(usr.id + '_posts').find({ user: user[0].username }).toArray(function (err, content) {
                         if (err) throw err;
+
+                        for (i in content) {
+                            if (content[i].likedBy.includes(request.user.username)) {
+                                content[i].likeStatus = "Dislike";
+                            } else {
+                                content[i].likeStatus = "Like";
+                            }
+                        }
+
+                        // content.forEach(post => {
+                        //     if(post.likedBy.includes(request.user.username)) {
+                        //         content['likeStatus'] = "Dislike";
+                        //     } else {
+                        //         content['likeStatus'] = "Like";
+                        //     }
+                        // });
 
                         response.render('search.ejs', {
                             content: content,
                             user: usr
                         });
-                        console.log(content);
+                        //console.log(content);
                         db.close();
                     });
                 }

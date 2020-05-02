@@ -17,7 +17,7 @@ router.post('/', function (request, response) {
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
         var dbo = db.db('UsersData');
-        dbo.collection(userId).deleteMany(function (err, obj) {
+        dbo.collection(userId+'_posts').deleteMany(function (err, obj) {
             if (err) throw err;
             console.log("all documents in collection deleted");
             db.close();

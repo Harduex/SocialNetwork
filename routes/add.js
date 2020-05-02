@@ -37,27 +37,33 @@ router.post('/', upload.single('image'), function (request, response) {
     let year = date_ob.getFullYear();
     let hours = date_ob.getHours();
     let minutes = date_ob.getMinutes();
-    var dateTime =  date + "." + month + "." + year + " / " + hours + ":" + minutes ;
+    var dateTime =  date + "." + month + "." + year + " " + hours + ":" + minutes ;
 
     //Upload file to database
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
         var dbo = db.db('UsersData');
-        var myobj = {
+        var post = {
             title: request.body.title,
             photo: randomStr,
             description: request.body.description,
             postid: postId,
             user: request.user.username,
             dateAdded: dateTime,
-            likes: 0
+            likes: 0,
+            likedBy: []
         };
 
-        dbo.collection(userId).insertOne(myobj, function (err, response) {
+        // var info = {
+        //     postsliked: []
+        // };
+
+        dbo.collection(userId + '_posts').insertOne(post, function (err, response) {
             if (err) throw err;
             console.log("1 document inserted");
-            db.close();
         });
+
+        db.close();
 
         var fileName = randomStr;
         functions.decode_save_base64(encoded_image, fileName + '.jpg', userId);

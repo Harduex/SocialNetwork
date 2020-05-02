@@ -14,7 +14,7 @@ var users;
 
 var initializePassport = require('./passport-config');
 initializePassport(
-  passport, 
+  passport,
   username => users.find(user => user.username === username),
   id => users.find(user => user.id === id)
 );
@@ -27,7 +27,7 @@ var deleteRouter = require('./routes/delete');
 var clearRouter = require('./routes/clear');
 var searchRouter = require('./routes/search');
 var changeProfilePicRouter = require('./routes/changeProfilePic');
-//var loginRouter = require('./routes/login');
+var likeRouter = require('./routes/like');
 var registrationRouter = require('./routes/register');
 
 var app = express();
@@ -56,34 +56,34 @@ app.use(bodyParser.json());
 
 app.use('/register', checkNotAuthenticated, registrationRouter);
 
-//app.use('/login', checkNotAuthenticated, loginRouter);
 app.get('/login', checkNotAuthenticated, function (request, response) {
   MongoClient.connect(url, function (err, db) {
     if (err) throw err;
     var dbo = db.db("Users");
     dbo.collection("credentials").find({}).toArray(function (err, usersArray) {
-        if (err) throw err;
-        users = usersArray;
-        db.close();
+      if (err) throw err;
+      users = usersArray;
+      db.close();
     });
   });
   response.render('login.ejs');
 });
 
 app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/login',
-  failureFlash: true
-})
+    successRedirect: '/',
+    failureRedirect: '/login',
+    failureFlash: true
+  })
 );
 
-app.use('/changeProfilePic' ,checkAuthenticated, changeProfilePicRouter);
+app.use('/changeProfilePic', checkAuthenticated, changeProfilePicRouter);
 app.use('/', checkAuthenticated, indexRouter);
 app.use('/add', checkAuthenticated, addRouter);
 app.use('/edit', checkAuthenticated, editRouter);
 app.use('/delete', checkAuthenticated, deleteRouter);
 app.use('/clear', checkAuthenticated, clearRouter);
 app.use('/search', checkAuthenticated, searchRouter);
+app.use('/like', checkAuthenticated, likeRouter);
 
 
 app.use((req, res, next) => {
@@ -93,27 +93,27 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use( function( req, res, next ) {
-  if ( req.query._method == 'DELETE' ) {
-      req.method = 'DELETE';
-  }       
-  next(); 
+app.use(function (req, res, next) {
+  if (req.query._method == 'DELETE') {
+    req.method = 'DELETE';
+  }
+  next();
 });
 
-app.delete('/logout', (reqest, response)=>{
+app.delete('/logout', (reqest, response) => {
   reqest.logOut();
   response.redirect('/login');
 });
 
 function checkAuthenticated(request, response, next) {
-    if(request.isAuthenticated()) {
-      return next();
-    }
-    response.redirect('/login');
+  if (request.isAuthenticated()) {
+    return next();
+  }
+  response.redirect('/login');
 }
 
 function checkNotAuthenticated(request, response, next) {
-  if(request.isAuthenticated()) {
+  if (request.isAuthenticated()) {
     return response.redirect('/');
   }
   return next();

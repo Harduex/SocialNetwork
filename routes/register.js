@@ -34,12 +34,20 @@ router.post('/', async (request, response) => {
                 password: hashedPassword,
                 id: userId
             };
-    
+
             dbo.collection("credentials").insertOne(myobj, function (err, response) {
                 if (err) throw err;
                 console.log("1 document inserted");
                 db.close();
             });
+
+            let info = { userid: userId };
+
+            db.db('UsersData').collection(userId + '_info').insertOne(info, function (err, response) {
+                if (err) throw err;
+                console.log("1 document inserted");
+            });
+
             response.redirect('/login');
         });
     } catch {
