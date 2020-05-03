@@ -17,27 +17,17 @@ router.post('/', function (request, response) {
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
         var dbo = db.db('Users');
-        var myquery = { id: userId };
-        var newvalues = { $set: { username: request.body.username } };
-        dbo.collection('credentials').updateOne(myquery, newvalues, function (err, res) {
-            if (err) throw err;
-            console.log("Username changed");
-            db.close();
-        });
-        db.db('UsersData').collection(userId+'_info').updateOne({ userid: userId }, newvalues, function (err, res) {
+        var myquery = { userid: userId };
+        var newvalues = { $set: { description: request.body.description } };
+
+        db.db('UsersData').collection(userId+'_info').updateOne(myquery , newvalues, function (err, res) {
             if (err) throw err;
         });
-        // db.db('UsersData').collection(userId+'_info').updateOne(myquery, newvalues, function (err, res) {
-        //     if (err) throw err;
-        //     console.log("Username changed");
-        //     db.close();
-        // });
-        
 
     });
 
-    request.logOut();
-    response.redirect("/login");
+    //request.logOut();
+    response.redirect("/");
 
 });
 

@@ -43,6 +43,7 @@ router.post('/', async (request, response) => {
 
             let info = {
                 username: request.body.username,
+                description: '',
                 userid: userId,
                 followers: [],
                 following: []

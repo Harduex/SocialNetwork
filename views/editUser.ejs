@@ -9,11 +9,11 @@
     <script src="javascripts/nav.js"></script>
     <br><br><br>
     <div class="form-container">
-        <h1 class="mobile">Change username</h1>
+        <h1 class="mobile">Edit user</h1>
 
         <form action="/editUser" method="post">
             <input type="hidden" name="photo_name" id="pht" />
-            <input class="mobile input-div" type="text" name="username" value="<%= user.username %>" />
+            <input class="mobile input-div" type="text" placeholder="Description" name="description" value="<%= user.description %>" />
             <br>
             <input class="mobile input-div" type="submit" value="Save"/>
         </form>

@@ -15,8 +15,14 @@
         <img class="profile-pic" width="12%" src="users/<%=user.id%>/images/profilePic/image.jpg">
       </a>
       <h1 class="mobile"><%= user.username %> <a class="btn-edit" href="/editUser">&#9998;</a></h1>
-      <p class="mobile-p-likes"><b>Followers:</b> <%= user.followers %></p>
-      <p class="mobile-p-likes"><b>Following:</b> <%= user.following %></p>
+      <div class="profile-name">
+        <p class="mobile-p-date"><b>Followers:</b> <%= user.followers %></p>
+        <p class="mobile-p-likes"><b>Following:</b> <%= user.following %></p>
+      </div>
+      <hr>
+      <div class="profile-name">
+        <p><b><%= user.description %></b></p>
+      </div>
       <div class="btn-conatiner">
         <hr>
         <form action="/add" method="get">
