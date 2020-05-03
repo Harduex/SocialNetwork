@@ -12,10 +12,15 @@
   <div class="form-container">
     <div class="post-div">
       <img class="profile-pic" width="12%" src="users/<%=user.id%>/images/profilePic/image.jpg">
-      <h1 class="mobile"><%= user.username %></h1>
-      <p class="mobile-p-likes"><b>Followers:</b> <%= userFollowInfo.followers %></p>
-      <p class="mobile-p-likes"><b>Following:</b> <%= userFollowInfo.following %></p>
-
+      <h1 class="mobile"><%= user.username %> <a class="btn-edit" href="/editUser">&#9998;</a></h1>
+      <div class="profile-name">
+        <p><b><%= userInfo.description %></b></p>
+      </div>
+      <hr>
+      <div class="profile-name">
+        <p class="mobile-p-left"><b>Followers:</b> <%= userInfo.followers %></p>
+        <p class="mobile-p-right"><b>Following:</b> <%= userInfo.following %></p>
+      </div>
       <div class="btn-conatiner">
         <hr>
         <form action="/follow" method="get">
@@ -44,8 +49,8 @@
       <br>
       <div class="post-desc">
         <p class="mobile"><b><%=post.description%></b></p>
-        <p class="mobile-p-date"><%= post.dateAdded %></p>
-        <p class="mobile-p-likes"><b>Likes:</b> <%= post.likes %></p>
+        <p class="mobile-p-left"><%= post.dateAdded %></p>
+        <p class="mobile-p-right"><b>Likes:</b> <%= post.likes %></p>
         <!-- <p class="mobile-p-likes" id="select"><b>Liked by:</b> <%= post.likedBy %></p> -->
       </div>
 

@@ -24,10 +24,11 @@ router.get('/', function (request, response) {
                     response.redirect('/');
                 } else {
 
-                    var followInfo = { following: [], followers: [] };
+                    var userInfo = { following: [], followers: [], description: '' };
                     db.db("UsersData").collection(usr.id + '_info').find({}).toArray(function (err, user) {
-                        followInfo.following = user[0].following;
-                        followInfo.followers = user[0].followers;
+                        userInfo.following = user[0].following;
+                        userInfo.followers = user[0].followers;
+                        userInfo.description = user[0].description;
                     });
 
                     db.db("UsersData").collection(usr.id + '_posts').find({ userid: user[0].id }).toArray(function (err, content) {
@@ -44,9 +45,8 @@ router.get('/', function (request, response) {
                         response.render('search.ejs', {
                             content: content,
                             user: usr,
-                            userFollowInfo: followInfo
+                            userInfo: userInfo
                         });
-                        //console.log(content);
                         db.close();
                     });
                 }

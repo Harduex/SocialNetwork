@@ -54,13 +54,8 @@ router.post('/', upload.single('image'), function (request, response) {
             likedBy: []
         };
 
-        // var info = {
-        //     postsliked: []
-        // };
-
         dbo.collection(userId + '_posts').insertOne(post, function (err, response) {
             if (err) throw err;
-            console.log("1 document inserted");
         });
 
         db.close();

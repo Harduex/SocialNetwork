@@ -30,20 +30,17 @@ router.get('/', (request, response) => {
                 dbo.collection(postUserId + '_posts').update(findByPostId, incrementLikes);
                 dbo.collection(currentUserId + '_info').update({ userid: currentUserId }, like, function (err, response) {
                     if (err) throw err;
-                    console.log("1 document inserted");
                 });
             } else {
                 if (result[0].postsLiked.includes(postId)) {
                     dbo.collection(postUserId + '_posts').update(findByPostId, decrementLikes);
                     dbo.collection(currentUserId + '_info').update({ userid: currentUserId }, dislike, function (err, response) {
                         if (err) throw err;
-                        console.log("1 document inserted");
                     });
                 } else {
                     dbo.collection(postUserId + '_posts').update(findByPostId, incrementLikes);
                     dbo.collection(currentUserId + '_info').update({ userid: currentUserId }, like, function (err, response) {
                         if (err) throw err;
-                        console.log("1 document inserted");
                     });
                 }
             }

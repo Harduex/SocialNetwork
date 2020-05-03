@@ -19,7 +19,6 @@ router.post('/', function (request, response) {
         var dbo = db.db('UsersData');
         dbo.collection(userId+'_posts').deleteMany(function (err, obj) {
             if (err) throw err;
-            console.log("all documents in collection deleted");
             db.close();
         });
     });
@@ -32,7 +31,7 @@ router.post('/', function (request, response) {
 
     fs.readdir(dir, (err, files) => {
         if (err) {
-            console.log(err);
+            throw err;
         }
     
         files.forEach(file => {

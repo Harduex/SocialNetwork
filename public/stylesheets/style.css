@@ -209,12 +209,12 @@ input[type=submit]:hover {
   display: none;
 }
 
-.mobile-p-likes {
+.mobile-p-right {
   padding-right: 40px;
   float: right;
 }
 
-.mobile-p-date {
+.mobile-p-left {
   padding-left: 0;
   float: left;
 }
@@ -273,12 +273,12 @@ input[type=submit]:hover {
     padding-left: 10px;
   } 
 
-  .mobile-p-likes {
+  .mobile-p-right {
     padding-right: 40px;
     font-size: 200%;
   }  
 
-  .mobile-p-date {
+  .mobile-p-left {
     padding-left: 15px;
     font-size: 200%;
   }

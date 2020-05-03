@@ -34,7 +34,6 @@ router.post('/', function (request, response) {
 
         dbo.collection(userId+'_posts').deleteOne(myquery, function (err, obj) {
             if (err) throw err;
-            console.log("1 document deleted");
             db.close();
         });
     });

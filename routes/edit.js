@@ -48,7 +48,6 @@ router.post('/', upload.single('image'), function (request, response) {
             var newvalues = { $set: { description: Description } };
             dbo.collection(userId+'_posts').updateOne(myquery, newvalues, function (err, res) {
                 if (err) throw err;
-                console.log("1 document updated");
                 db.close();
             });
 
@@ -66,7 +65,6 @@ router.post('/', upload.single('image'), function (request, response) {
             var newvalues = { $set: { description: Description } };
             dbo.collection(userId+'_posts').updateOne(myquery, newvalues, function (err, res) {
                 if (err) throw err;
-                console.log("1 document updated");
                 db.close();
             });
 

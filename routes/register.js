@@ -37,7 +37,6 @@ router.post('/', async (request, response) => {
 
             dbo.collection("credentials").insertOne(myobj, function (err, response) {
                 if (err) throw err;
-                console.log("1 document inserted");
                 db.close();
             });
 
@@ -53,7 +52,6 @@ router.post('/', async (request, response) => {
 
             db.db('UsersData').collection(userId + '_info').insertOne(info, function (err, response) {
                 if (err) throw err;
-                console.log("1 document inserted");
             });
             functions.checkProfilePic(userId);
             response.redirect('/login');

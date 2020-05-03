@@ -17,7 +17,6 @@ router.get('/', function (request, response) {
         var user;
         dbo.collection(userId+'_info').find({}).toArray(function (err, usr) {
             user = {...request.user, ...usr[0]};
-            console.log(user);
         });
 
         dbo.collection(userId+'_posts').find({}).toArray(function (err, content) {
@@ -30,7 +29,6 @@ router.get('/', function (request, response) {
             db.close();
         });
     });
-    console.log("User logged in: " + request.user.username);
 });
 
 
