@@ -54,7 +54,7 @@
       <div class="post-desc">
         <p class="mobile"><b><%=post.description%></b></p>
         <p class="mobile-p-left"><%= post.dateAdded %></p>
-        <p class="mobile-p-right"><b>Likes:</b> <%= post.likes %></p>
+        <p class="mobile-p-right"><b>Likes:</b> <%= (post.likedBy).length %></p>
       </div>
 
       <div class="btn-conatiner">
