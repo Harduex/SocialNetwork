@@ -11,8 +11,12 @@
 
   <div class="form-container">
     <div class="post-div">
-      <h1 class="mobile"><%= user.username %></h1>
-
+      <a href="/changeProfilePic">
+        <img class="profile-pic" width="12%" src="users/<%=user.id%>/images/profilePic/image.jpg">
+      </a>
+      <h1 class="mobile"><%= user.username %> <a class="btn-edit" href="/editUser">&#9998;</a></h1>
+      <p class="mobile-p-likes"><b>Followers:</b> <%= user.followers %></p>
+      <p class="mobile-p-likes"><b>Following:</b> <%= user.following %></p>
       <div class="btn-conatiner">
         <hr>
         <form action="/add" method="get">
@@ -29,18 +33,14 @@
     <% content.reverse().forEach(function(post) { %>
     <div class="post-div">
 
-      <div class="user-info mobile">
+      <div class="user-info mobile mobile-username">
         <hr>
-        <a href="/changeProfilePic">
-          <img class="profile-pic" width="12%" src="users/<%=user.id%>/images/profilePic/image.jpg">
-        </a>
-        <div>
-          <p class="profile-name"><%= user.username %></p>
+        <img class="profile-pic" width="9%" src="users/<%=user.id%>/images/profilePic/image.jpg">
+        <div class="profile-name">
+          <p><b><%= user.username %></b></p>
         </div>
-        <hr>
       </div>
 
-      <p class="mobile"><%=post.title%></p>
       <img class="lazy post-img" src="users/<%=user.id%>/images/<%=post.photo%>_small.jpg"
         data-src="users/<%=user.id%>/images/<%=post.photo%>.jpg">
       <br>
@@ -49,7 +49,7 @@
         <p class="mobile-p-date"><%= post.dateAdded %></p>
         <p class="mobile-p-likes"><b>Likes:</b> <%= post.likes %></p>
       </div>
-      
+
       <div class="btn-conatiner">
         <hr>
         <form method="POST" action="/delete">
@@ -61,7 +61,6 @@
         <form method="get" action="/edit">
           <input type="hidden" name="post_id" value="<%=post.postid%>" />
           <input type="hidden" name="photo_name" value="<%=post.photo%>" />
-          <input type="hidden" name="post_title" value="<%=post.title%>" />
           <input type="hidden" name="post_description" value="<%=post.description%>" />
           <input type="submit" class="mobile input-div" value="Edit" />
         </form>

@@ -44,11 +44,11 @@ router.post('/', upload.single('image'), function (request, response) {
         if (err) throw err;
         var dbo = db.db('UsersData');
         var post = {
-            title: request.body.title,
             photo: randomStr,
             description: request.body.description,
             postid: postId,
             user: request.user.username,
+            userid: request.user.id,
             dateAdded: dateTime,
             likes: 0,
             likedBy: []

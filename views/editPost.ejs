@@ -13,7 +13,6 @@
 
         <form action="/edit" enctype="multipart/form-data" method="post">
             <input type="hidden" name="photo_name" id="pht" />
-            <input class="mobile input-div" placeholder="Title" type="text" name="title" id="titl" />
             <br>
             <textarea class="mobile input-div" rows="4" cols="50" placeholder="Description" type="text" name="description" id="desc"></textarea>
             <br>
@@ -32,7 +31,6 @@
         console.log(queryString);
         const urlParams = new URLSearchParams(queryString);
 
-        document.getElementById("titl").value = urlParams.get("post_title");
         document.getElementById("desc").value = urlParams.get("post_description");
         
     </script>

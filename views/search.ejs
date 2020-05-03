@@ -11,11 +11,16 @@
 
   <div class="form-container">
     <div class="post-div">
+      <img class="profile-pic" width="12%" src="users/<%=user.id%>/images/profilePic/image.jpg">
       <h1 class="mobile"><%= user.username %></h1>
+      <p class="mobile-p-likes"><b>Followers:</b> <%= userFollowInfo.followers %></p>
+      <p class="mobile-p-likes"><b>Following:</b> <%= userFollowInfo.following %></p>
 
       <div class="btn-conatiner">
         <hr>
-        <form action="/follow" method="post">
+        <form action="/follow" method="get">
+          <input type="hidden" name="user_id" value="<%=user.id%>" />
+          <input type="hidden" name="user_name" value="<%=user.username%>" />
           <input type="submit" name="follow" value="Follow" class="mobile btn-sub input-div" />
         </form>
         <hr>
@@ -27,12 +32,12 @@
 
       <div class="user-info mobile">
         <hr>
-        <img class="profile-pic" width="12%" src="users/<%=user.id%>/images/profilePic/image.jpg">
-        <p class="profile-name"><%= user.username %></p>
-        <hr>
+        <img class="profile-pic" width="9%" src="users/<%=user.id%>/images/profilePic/image.jpg">
+        <div class="profile-name">
+          <p><b><%= user.username %></b></p>
+        </div>
       </div>
 
-      <p class="mobile"><%=post.title%></p>
       <img class="lazy post-img" src="users/<%=user.id%>/images/<%=post.photo%>_small.jpg"
         data-src="users/<%=user.id%>/images/<%=post.photo%>.jpg">
       <br>
@@ -41,11 +46,12 @@
         <p class="mobile"><b><%=post.description%></b></p>
         <p class="mobile-p-date"><%= post.dateAdded %></p>
         <p class="mobile-p-likes"><b>Likes:</b> <%= post.likes %></p>
+        <!-- <p class="mobile-p-likes" id="select"><b>Liked by:</b> <%= post.likedBy %></p> -->
       </div>
 
       <div class="btn-conatiner">
         <hr>
-        <form method="POST" action="/comment">
+        <form method="get" action="/comment">
           <input type="hidden" name="post_id" value="<%=post.postid%>" />
           <input type="submit" class="mobile input-div" value="Comment" />
         </form>
@@ -56,6 +62,7 @@
           <input type="submit" id="like" class="mobile input-div" value="<%= post.likeStatus %>" />
         </form>
         <hr>
+
       </div>
 
     </div>
@@ -64,6 +71,7 @@
   </div>
 
   <script>
+
     //lazyload();
     document.addEventListener("DOMContentLoaded", function () {
       var lazyloadImages = document.querySelectorAll("img.lazy");

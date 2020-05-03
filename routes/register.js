@@ -41,13 +41,20 @@ router.post('/', async (request, response) => {
                 db.close();
             });
 
-            let info = { userid: userId };
+            let info = {
+                username: request.body.username,
+                userid: userId,
+                followers: [],
+                following: []
+                //follows: [],
+                //followedBy: []
+            };
 
             db.db('UsersData').collection(userId + '_info').insertOne(info, function (err, response) {
                 if (err) throw err;
                 console.log("1 document inserted");
             });
-
+            functions.checkProfilePic(userId);
             response.redirect('/login');
         });
     } catch {

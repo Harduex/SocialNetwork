@@ -16,10 +16,6 @@ router.post('/', function (request, response) {
         if (err) throw err;
         var dbo = db.db('UsersData');
 
-        //var myquery = { title: request.body.post_title };
-
-        //console.log('POST ID:' + request.body.post_id);
-
         var postId = request.body.post_id;
         let dir = `./public/users/${userId}/images/`;
         var fileName = request.body.photo_name;
@@ -35,7 +31,6 @@ router.post('/', function (request, response) {
         fs.unlinkSync(smallPhotoPath);
 
         var myquery = { postid: postId };
-        //var myquery = { title: request.body.post_title };
 
         dbo.collection(userId+'_posts').deleteOne(myquery, function (err, obj) {
             if (err) throw err;

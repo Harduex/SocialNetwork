@@ -5,6 +5,29 @@ body {
   background-color: #18191a;
 }
 
+/* Tags start */
+h1 {
+  color: #b0b3b8;
+}
+
+hr {
+  height: 1px;
+  width: 95%;
+  color: rgb(107, 107, 107);
+  background-color: rgb(107, 107, 107);
+  border: none;
+  margin: auto;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+p {
+  word-wrap: break-word;
+  font-size: 100%;
+}
+/* Tags end */
+
+/* Inputs start */
 .input-div { 
   width: 25%;
   padding: 12px 20px;
@@ -36,10 +59,6 @@ body {
   transition: ease-out 0.15s;
 }
 
-p {
-  word-wrap: break-word;
-  font-size: 100%;
-}
 input:hover {
   filter: brightness(90%);
 }
@@ -52,15 +71,20 @@ input[type=submit] {
 input[type=submit]:hover {
   cursor: pointer;
 }
+/* Inputs end */
 
+/* Posts start*/
 .post-div {
   background-color: #333333;
   color: #b0b3b8;
   border-radius: 10px; 
   padding: 20px 0 20px 0; 
   margin: 0 30% 20px 30%;
-  /* border: 1px solid #ccc; */
   transition: ease-out 0.15s;
+}
+
+.post-div h1 {
+  text-align: Left;
 }
 
 .post-img {
@@ -72,7 +96,9 @@ input[type=submit]:hover {
   text-align: left;
   padding-left: 25px;
 }
+/* Posts end*/
 
+/* Profile start*/
 .profile-pic {
   border-radius: 8%;
   float: left;
@@ -80,28 +106,21 @@ input[type=submit]:hover {
 }
 
 .profile-name {
-  float: left;
-  color: #b0b3b8;
+  text-align: left;
+  padding-left: 5%;
   padding-top: 1%;
 }
+/* Profile end*/
 
-h1 {
-  color: #b0b3b8;
-}
-
-hr {
-  height: 1px;
-  width: 95%;
-  color: rgb(107, 107, 107);
-  background-color: rgb(107, 107, 107);
-  border: none;
-  margin: auto;
-  margin-top: 2px;
-  margin-bottom: 2px;
-}
-
+/* Buttons start*/
 .btn-sub {
   width: 40%;
+}
+
+.btn-edit {
+  font-size: 30px;
+  text-decoration: none;
+  color: #b0b3b8;
 }
 
 .btn-conatiner form{
@@ -117,7 +136,9 @@ hr {
   color: #b0b3b8;
   border: none;
 }
+/* Buttons end*/
 
+/* Files start*/
 .fileContainer {
   overflow: hidden;
   position: relative;
@@ -147,7 +168,10 @@ hr {
   width: 70px; 
   height: 48px;
   margin: 10px 8px 0 8px;
-}/* Nav bar start */
+}
+/* Files end*/
+
+/* Nav bar start */
 .topnav {
   overflow: hidden;
   background-color: #333;
@@ -195,6 +219,8 @@ hr {
   float: left;
 }
 
+/* Navbar end*/
+
 @media screen and (max-width: 1000px) {
   .topnav a:not(:first-child) {display: none;}
   .topnav a.icon {
@@ -203,6 +229,11 @@ hr {
   }
   .topnav {
     position: relative;
+  }
+  .topnav a, .mobile {
+    font-size: 45px;
+    padding: 10px 17px 3px 0;
+    margin: 1% 1% 1% 1%;
   }
   .form-container{
     margin-left: 30px;
@@ -214,30 +245,6 @@ hr {
     height: 100%;
     width: 100%;
   }
-  .topnav a, .mobile {
-    font-size: 45px;
-    padding: 10px 17px 3px 0;
-    margin: 1% 1% 1% 1%;
-  }
-
-  .mobile {
-    width: 98%;
-  }
-
-  .mobile-p {
-    font-size: 160%;
-    padding-left: 10px;
-  }  
-
-  .mobile-p-likes {
-    padding-right: 40px;
-    font-size: 200%;
-  }  
-
-  .mobile-p-date {
-    padding-left: 15px;
-    font-size: 200%;
-  }
 
   input[type=submit] {
     height: 160px;
@@ -248,6 +255,35 @@ hr {
     margin: 0 0 20px 0;
   }
 
+ /* Mobile view start */
+  .mobile {
+    width: 98%;
+  }
+  
+  .mobile-username {
+    font-size: 240%;
+  }
+  
+  .mobile-username p {
+    margin: 35px 0 0 0 ;
+  }
+
+  .mobile-p {
+    font-size: 160%;
+    padding-left: 10px;
+  } 
+
+  .mobile-p-likes {
+    padding-right: 40px;
+    font-size: 200%;
+  }  
+
+  .mobile-p-date {
+    padding-left: 15px;
+    font-size: 200%;
+  }
+ /* Mobile view end */
+ 
 }
 
 @media screen and (max-width: 1000px) {

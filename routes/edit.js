@@ -18,7 +18,6 @@ var url = "mongodb://localhost:27017/";
 
 var postId;
 var PhotoName;
-var Title;
 var Description;
 
 router.get('/', function (request, response) {
@@ -33,7 +32,6 @@ router.post('/', upload.single('image'), function (request, response) {
 
     var userId = request.user.id;
 
-    Title = request.body.title;
     Description = request.body.description;
 
     let dir = `./public/users/${userId}/images/`;
@@ -47,7 +45,7 @@ router.post('/', upload.single('image'), function (request, response) {
             if (err) throw err;
             var dbo = db.db('UsersData');
             var myquery = { postid: postId };
-            var newvalues = { $set: { title: Title, description: Description } };
+            var newvalues = { $set: { description: Description } };
             dbo.collection(userId+'_posts').updateOne(myquery, newvalues, function (err, res) {
                 if (err) throw err;
                 console.log("1 document updated");
@@ -65,7 +63,7 @@ router.post('/', upload.single('image'), function (request, response) {
             if (err) throw err;
             var dbo = db.db('UsersData');
             var myquery = { postid: postId };
-            var newvalues = { $set: { title: Title, description: Description } };
+            var newvalues = { $set: { description: Description } };
             dbo.collection(userId+'_posts').updateOne(myquery, newvalues, function (err, res) {
                 if (err) throw err;
                 console.log("1 document updated");

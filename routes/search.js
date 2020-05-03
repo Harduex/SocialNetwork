@@ -24,9 +24,13 @@ router.get('/', function (request, response) {
                     response.redirect('/');
                 } else {
 
-                    console.log(usr);
+                    var followInfo = { following: [], followers: [] };
+                    db.db("UsersData").collection(usr.id + '_info').find({}).toArray(function (err, user) {
+                        followInfo.following = user[0].following;
+                        followInfo.followers = user[0].followers;
+                    });
 
-                    db.db("UsersData").collection(usr.id + '_posts').find({ user: user[0].username }).toArray(function (err, content) {
+                    db.db("UsersData").collection(usr.id + '_posts').find({ userid: user[0].id }).toArray(function (err, content) {
                         if (err) throw err;
 
                         for (i in content) {
@@ -37,17 +41,10 @@ router.get('/', function (request, response) {
                             }
                         }
 
-                        // content.forEach(post => {
-                        //     if(post.likedBy.includes(request.user.username)) {
-                        //         content['likeStatus'] = "Dislike";
-                        //     } else {
-                        //         content['likeStatus'] = "Like";
-                        //     }
-                        // });
-
                         response.render('search.ejs', {
                             content: content,
-                            user: usr
+                            user: usr,
+                            userFollowInfo: followInfo
                         });
                         //console.log(content);
                         db.close();

@@ -27,7 +27,9 @@ var deleteRouter = require('./routes/delete');
 var clearRouter = require('./routes/clear');
 var searchRouter = require('./routes/search');
 var changeProfilePicRouter = require('./routes/changeProfilePic');
+var editUserRouter = require('./routes/editUser');
 var likeRouter = require('./routes/like');
+var followRouter = require('./routes/follow');
 var registrationRouter = require('./routes/register');
 
 var app = express();
@@ -77,6 +79,7 @@ app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
 );
 
 app.use('/changeProfilePic', checkAuthenticated, changeProfilePicRouter);
+app.use('/editUser', checkAuthenticated, editUserRouter);
 app.use('/', checkAuthenticated, indexRouter);
 app.use('/add', checkAuthenticated, addRouter);
 app.use('/edit', checkAuthenticated, editRouter);
@@ -84,6 +87,7 @@ app.use('/delete', checkAuthenticated, deleteRouter);
 app.use('/clear', checkAuthenticated, clearRouter);
 app.use('/search', checkAuthenticated, searchRouter);
 app.use('/like', checkAuthenticated, likeRouter);
+app.use('/follow', checkAuthenticated, followRouter);
 
 
 app.use((req, res, next) => {
