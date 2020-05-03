@@ -12,21 +12,21 @@
   <div class="form-container">
     <div class="post-div">
       <img class="profile-pic" width="12%" src="users/<%=user.id%>/images/profilePic/image.jpg">
-      <h1 class="mobile"><%= user.username %> <a class="btn-edit" href="/editUser">&#9998;</a></h1>
+      <h1 class="mobile"><%= user.username %></h1>
       <div class="profile-name">
         <p><b><%= userInfo.description %></b></p>
       </div>
       <hr>
       <div class="profile-name">
-        <p class="mobile-p-left"><b>Followers:</b> <%= userInfo.followers %></p>
-        <p class="mobile-p-right"><b>Following:</b> <%= userInfo.following %></p>
+        <p class="mobile-p-left"><b>Followers:</b> <%= (userInfo.followers).length %></p>
+        <p class="mobile-p-right"><b>Following:</b> <%= (userInfo.following).length %></p>
       </div>
       <div class="btn-conatiner">
         <hr>
         <form action="/follow" method="get">
           <input type="hidden" name="user_id" value="<%=user.id%>" />
           <input type="hidden" name="user_name" value="<%=user.username%>" />
-          <input type="submit" name="follow" value="Follow" class="mobile btn-sub input-div" />
+          <input type="submit" name="follow" value="<%= userInfo.followingStatus %>" class="mobile btn-sub input-div" />
         </form>
         <hr>
       </div>
@@ -50,7 +50,7 @@
       <div class="post-desc">
         <p class="mobile"><b><%=post.description%></b></p>
         <p class="mobile-p-left"><%= post.dateAdded %></p>
-        <p class="mobile-p-right"><b>Likes:</b> <%= post.likes %></p>
+        <p class="mobile-p-right"><b>Likes:</b> <%= (post.likedBy).length %></p>
         <!-- <p class="mobile-p-likes" id="select"><b>Liked by:</b> <%= post.likedBy %></p> -->
       </div>
 

@@ -18,8 +18,8 @@ router.get('/', (request, response) => {
 
         let findByPostId = { postid: postId };
 
-        let incrementLikes = { $inc: { likes: 1 }, $push: { likedBy: currentUserName} };
-        let decrementLikes = { $inc: { likes: -1 }, $pull: { likedBy: currentUserName} };
+        let incrementLikes = { $push: { likedBy: currentUserName} };
+        let decrementLikes = { $pull: { likedBy: currentUserName} };
 
         let like = { $push: { postsLiked: postId } };
         let dislike = { $pull: { postsLiked: postId } };

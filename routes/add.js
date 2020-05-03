@@ -50,7 +50,6 @@ router.post('/', upload.single('image'), function (request, response) {
             user: request.user.username,
             userid: request.user.id,
             dateAdded: dateTime,
-            likes: 0,
             likedBy: []
         };
 

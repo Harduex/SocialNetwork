@@ -24,11 +24,22 @@ router.get('/', function (request, response) {
                     response.redirect('/');
                 } else {
 
-                    var userInfo = { following: [], followers: [], description: '' };
+                    var userInfo = { following: [], followers: [], description: '', followingStatus: '' };
                     db.db("UsersData").collection(usr.id + '_info').find({}).toArray(function (err, user) {
-                        userInfo.following = user[0].following;
-                        userInfo.followers = user[0].followers;
-                        userInfo.description = user[0].description;
+                        var usr = user[0];
+
+                        userInfo.following = usr.following;
+                        userInfo.followers = usr.followers;
+                        userInfo.description = usr.description;
+
+                        for (i in usr) {
+                            if (usr.followers.includes(request.user.username)) {
+                                userInfo.followingStatus = "Unfollow";
+                            } else {
+                                userInfo.followingStatus = "Follow";
+                            }
+                        }
+
                     });
 
                     db.db("UsersData").collection(usr.id + '_posts').find({ userid: user[0].id }).toArray(function (err, content) {

@@ -45,9 +45,8 @@ router.post('/', async (request, response) => {
                 description: '',
                 userid: userId,
                 followers: [],
-                following: []
-                //follows: [],
-                //followedBy: []
+                following: [],
+                postsLiked: []
             };
 
             db.db('UsersData').collection(userId + '_info').insertOne(info, function (err, response) {
