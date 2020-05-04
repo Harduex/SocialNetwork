@@ -21,7 +21,6 @@ router.get('/', function (request, response) {
 
         dbo.collection(userId+'_posts').find({}).toArray(function (err, content) {
             if (err) throw err;
-            
             response.render('index.ejs', { content: content,
                                             user: user
                                          });

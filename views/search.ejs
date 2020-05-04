@@ -13,8 +13,11 @@
     <div class="post-div">
       <img class="profile-pic" width="12%" src="users/<%=user.id%>/images/profilePic/image.jpg">
       <h1 class="mobile"><%= user.username %></h1>
+      <br>
+      <br>
       <div class="profile-name">
-        <p><b><%= userInfo.description %></b></p>
+        <p class="mobile-p-left"><b><%= userInfo.description %></b></p>
+        <p class="mobile-p-right"><b>Posts:</b> <%= (content).length %></p>
       </div>
       <hr>
       <div class="profile-name">
@@ -26,7 +29,7 @@
         <form action="/follow" method="get">
           <input type="hidden" name="user_id" value="<%=user.id%>" />
           <input type="hidden" name="user_name" value="<%=user.username%>" />
-          <input type="submit" name="follow" value="<%= userInfo.followingStatus %>" class="mobile btn-sub input-div" />
+          <input type="submit" name="follow" id="followingStatus" value="<%= userInfo.followingStatus %>" class="mobile btn-sub input-div" />
         </form>
         <hr>
       </div>
@@ -51,6 +54,7 @@
         <p class="mobile"><b><%=post.description%></b></p>
         <p class="mobile-p-left"><%= post.dateAdded %></p>
         <p class="mobile-p-right"><b>Likes:</b> <%= (post.likedBy).length %></p>
+        <p class="mobile-p-right"><b>Comments:</b> <%= (post.comments).length %></p>
         <!-- <p class="mobile-p-likes" id="select"><b>Liked by:</b> <%= post.likedBy %></p> -->
       </div>
 
@@ -58,12 +62,15 @@
         <hr>
         <form method="get" action="/comment">
           <input type="hidden" name="post_id" value="<%=post.postid%>" />
+          <input type="hidden" name="user_id" value="<%=user.id%>" />
+          <input type="hidden" name="user_name" value="<%=user.username%>" id="usrname" />
           <input type="submit" class="mobile input-div" value="Comment" />
         </form>
 
         <form method="get" action="/like">
           <input type="hidden" name="post_id" value="<%=post.postid%>" />
-          <input type="hidden" name="user_id" value="<%=user.id%>" />
+          <input type="hidden" name="user_id" value="<%=user.id%>" id="usrId" />
+          <input type="hidden" name="user_name" value="<%=user.username%>" id="usrname" />
           <input type="submit" id="like" class="mobile input-div" value="<%= post.likeStatus %>" />
         </form>
         <hr>
@@ -74,10 +81,31 @@
     <% }); %>
 
   </div>
+  <script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc="
+    crossorigin="anonymous"></script>
+
+  <!-- <script>
+    $(document).ready(() => {
+      $.ajax({
+        type: 'GET',
+        url: '/user/' + $('#usrId').val() + '/' + $('#usrname').val(),
+        success: (data) => {
+          console.log(data);
+          var followingStatus;
+
+
+          if (data.currnetUser.following.includes($('#usrname').val())) {
+            $('#followingStatus').val("Unfollow");
+          } else {
+            $('#followingStatus').val("follow");
+          }
+
+        }
+      });
+    });
+  </script> -->
 
   <script>
-
-    //lazyload();
     document.addEventListener("DOMContentLoaded", function () {
       var lazyloadImages = document.querySelectorAll("img.lazy");
       var lazyloadThrottleTimeout;

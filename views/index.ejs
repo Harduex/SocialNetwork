@@ -15,13 +15,17 @@
         <img class="profile-pic" width="12%" src="users/<%=user.id%>/images/profilePic/image.jpg">
       </a>
       <h1 class="mobile"><%= user.username %> <a class="btn-edit" href="/editUser">&#9998;</a></h1>
+      <br>
+      <br>
       <div class="profile-name">
         <p class="mobile-p-left"><b><%= user.description %></b></p>
+        <p class="mobile-p-right"><b>Posts:</b> <%= (content).length %></p>
       </div>
       <hr>
       <div class="profile-name">
         <p class="mobile-p-left"><b>Followers:</b> <%= (user.followers).length %></p>
         <p class="mobile-p-right"><b>Following:</b> <%= (user.following).length %></p>
+
       </div>
 
       <div class="btn-conatiner">
@@ -36,10 +40,9 @@
         <hr>
       </div>
     </div>
-
+    
     <% content.reverse().forEach(function(post) { %>
     <div class="post-div">
-
       <div class="user-info mobile mobile-username">
         <hr>
         <img class="profile-pic" width="9%" src="users/<%=user.id%>/images/profilePic/image.jpg">
@@ -55,6 +58,7 @@
         <p class="mobile"><b><%=post.description%></b></p>
         <p class="mobile-p-left"><%= post.dateAdded %></p>
         <p class="mobile-p-right"><b>Likes:</b> <%= (post.likedBy).length %></p>
+        <p class="mobile-p-right"><b>Comments:</b> <%= (post.comments).length %></p>
       </div>
 
       <div class="btn-conatiner">
@@ -78,6 +82,20 @@
     <% }); %>
 
   </div>
+  <script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
+  
+  <script>
+    //  $(document).ready(() => {
+    //     $.ajax({
+    //       type: 'GET',
+    //       url: '/user',
+    //       success: (data) => {
+    //         console.log(data);
+    //       }
+    //     });
+    //  });
+  </script>
+
 
   <script>
     //lazyload();

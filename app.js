@@ -31,6 +31,9 @@ var editUserRouter = require('./routes/editUser');
 var likeRouter = require('./routes/like');
 var followRouter = require('./routes/follow');
 var registrationRouter = require('./routes/register');
+var userRouter = require('./routes/user');
+var commentRouter = require('./routes/comment');
+
 
 var app = express();
 
@@ -88,7 +91,8 @@ app.use('/clear', checkAuthenticated, clearRouter);
 app.use('/search', checkAuthenticated, searchRouter);
 app.use('/like', checkAuthenticated, likeRouter);
 app.use('/follow', checkAuthenticated, followRouter);
-
+app.use('/user', checkAuthenticated, userRouter);
+app.use('/comment', checkAuthenticated, commentRouter);
 
 app.use((req, res, next) => {
   next();

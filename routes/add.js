@@ -50,7 +50,8 @@ router.post('/', upload.single('image'), function (request, response) {
             user: request.user.username,
             userid: request.user.id,
             dateAdded: dateTime,
-            likedBy: []
+            likedBy: [],
+            comments: []
         };
 
         dbo.collection(userId + '_posts').insertOne(post, function (err, response) {
