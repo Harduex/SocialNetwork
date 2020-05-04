@@ -123,6 +123,11 @@ input[type=submit]:hover {
   color: #b0b3b8;
 }
 
+.clean-link {
+  text-decoration: none;
+  color: #b0b3b8;
+}
+
 .btn-conatiner form{
   display:inline-block;
   margin: auto;
@@ -210,7 +215,7 @@ input[type=submit]:hover {
 }
 
 .mobile-p-right {
-  padding-right: 20px;
+  padding-right: 35px;
   float: right;
 }
 

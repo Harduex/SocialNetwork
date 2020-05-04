@@ -1,0 +1,33 @@
+<!doctype html>
+
+<head>
+  <title>Post comments</title>
+  <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+</head>
+
+<body>
+  <script src="javascripts/nav.js"></script>
+  <br><br><br>
+
+  <div class="form-container">
+    <h1 class="mobile">Post comments</h1>
+    <div class="post-div">
+      <ul>
+        <hr>
+        <% comments.forEach(function(comment) { %>
+        <li>
+          <div class="profile-name">
+            <a href="/search?search=<%=comment.user%>" >
+              <p class="mobile-left clean-link"><b><%= comment.user %></b></p>
+            </a>
+            <p class="mobile-right clean-link"><b><%= comment.comment %></b></p>
+          </div>
+        </li>
+        <hr>
+        <%});%>
+      </ul>
+    </div>
+  </div>
+</body>
+
+</html>

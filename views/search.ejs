@@ -20,16 +20,36 @@
         <p class="mobile-p-right"><b>Posts:</b> <%= (content).length %></p>
       </div>
       <hr>
+      
       <div class="profile-name">
-        <p class="mobile-p-left"><b>Followers:</b> <%= (userInfo.followers).length %></p>
-        <p class="mobile-p-right"><b>Following:</b> <%= (userInfo.following).length %></p>
+
+        <form method="get" action="/followersList">
+          <input type="hidden" name="user_id" value="<%=user.id%>" />
+          <a href=""  class="clean-link">
+            <p onclick="this.closest('form').submit();return false;" class="mobile-p-left">
+              <b>Followers:</b> <%= (userInfo.followers).length %>
+            </p>
+          </a>
+        </form>
+
+        <form method="get" action="/followingList">
+          <input type="hidden" name="user_id" value="<%=user.id%>" />
+          <a href=""  class="clean-link">
+            <p onclick="this.closest('form').submit();return false;" class="mobile-p-right">
+              <b>Following:</b> <%= (userInfo.following).length %>
+            </p>
+          </a>
+        </form>
+
       </div>
+
       <div class="btn-conatiner">
         <hr>
         <form action="/follow" method="get">
           <input type="hidden" name="user_id" value="<%=user.id%>" />
           <input type="hidden" name="user_name" value="<%=user.username%>" />
-          <input type="submit" name="follow" id="followingStatus" value="<%= userInfo.followingStatus %>" class="mobile btn-sub input-div" />
+          <input type="submit" name="follow" id="followingStatus" value="<%= userInfo.followingStatus %>"
+            class="mobile btn-sub input-div" />
         </form>
         <hr>
       </div>
@@ -53,10 +73,33 @@
       <div class="post-desc">
         <p class="mobile"><b><%=post.description%></b></p>
         <p class="mobile-p-left"><%= post.dateAdded %></p>
-        <p class="mobile-p-right"><b>Likes:</b> <%= (post.likedBy).length %></p>
-        <p class="mobile-p-right"><b>Comments:</b> <%= (post.comments).length %></p>
-        <!-- <p class="mobile-p-likes" id="select"><b>Liked by:</b> <%= post.likedBy %></p> -->
       </div>
+              <hr>
+      <div class="profile-name">
+        
+        <form method="get" action="/likesList">
+          <input type="hidden" name="post_id" value="<%=post.postid%>" />
+          <input type="hidden" name="user_id" value="<%=user.id%>" />
+          <a href=""  class="clean-link">
+            <p onclick="this.closest('form').submit();return false;" class="mobile-p-right">
+              <b>Likes:</b> <%= (post.likedBy).length %>
+            </p>
+          </a>
+        </form>
+
+        <form method="get" action="/commentsList">
+          <input type="hidden" name="post_id" value="<%=post.postid%>" />
+          <input type="hidden" name="user_id" value="<%=user.id%>" />
+          <a href=""  class="clean-link">
+            <p onclick="this.closest('form').submit();return false;" class="mobile-p-left">
+              <b>Comments:</b> <%= (post.comments).length %>
+            </p>
+          </a>
+        </form>
+
+      </div>
+
+ 
 
       <div class="btn-conatiner">
         <hr>

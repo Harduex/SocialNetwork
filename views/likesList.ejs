@@ -1,0 +1,32 @@
+<!doctype html>
+
+<head>
+  <title>Post likes</title>
+  <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+</head>
+
+<body>
+  <script src="javascripts/nav.js"></script>
+  <br><br><br>
+
+  <div class="form-container">
+    <h1 class="mobile">Post likes</h1>
+    <div class="post-div">
+      <ul>
+        <hr>
+        <% likes.forEach(function(like) { %>
+        <li>
+          <div class="profile-name">
+            <a href="/search?search=<%=like%>">
+              <p class="mobile-left clean-link"><b><%= like %></b></p>
+            </a>
+          </div>
+        </li>
+        <hr>
+        <%});%>
+      </ul>
+    </div>
+  </div>
+</body>
+
+</html>

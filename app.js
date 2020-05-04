@@ -34,6 +34,11 @@ var registrationRouter = require('./routes/register');
 var userRouter = require('./routes/user');
 var commentRouter = require('./routes/comment');
 
+var followersListRouter = require('./routes/followersList');
+var followingListRouter = require('./routes/followingList');
+var likesListRouter = require('./routes/likesList');
+var commentsListRouter = require('./routes/commentsList');
+
 
 var app = express();
 
@@ -93,6 +98,12 @@ app.use('/like', checkAuthenticated, likeRouter);
 app.use('/follow', checkAuthenticated, followRouter);
 app.use('/user', checkAuthenticated, userRouter);
 app.use('/comment', checkAuthenticated, commentRouter);
+
+app.use('/followersList', checkAuthenticated, followersListRouter);
+app.use('/followingList', checkAuthenticated, followingListRouter);
+app.use('/likesList', checkAuthenticated, likesListRouter);
+app.use('/commentsList', checkAuthenticated, commentsListRouter);
+
 
 app.use((req, res, next) => {
   next();
