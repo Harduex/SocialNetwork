@@ -33,6 +33,7 @@ var followRouter = require('./routes/follow');
 var registrationRouter = require('./routes/register');
 var userRouter = require('./routes/user');
 var commentRouter = require('./routes/comment');
+var profileRouter = require('./routes/profile');
 
 var followersListRouter = require('./routes/followersList');
 var followingListRouter = require('./routes/followingList');
@@ -98,6 +99,7 @@ app.use('/like', checkAuthenticated, likeRouter);
 app.use('/follow', checkAuthenticated, followRouter);
 app.use('/user', checkAuthenticated, userRouter);
 app.use('/comment', checkAuthenticated, commentRouter);
+app.use('/profile', checkAuthenticated, profileRouter);
 
 app.use('/followersList', checkAuthenticated, followersListRouter);
 app.use('/followingList', checkAuthenticated, followingListRouter);
@@ -108,7 +110,6 @@ app.use('/commentsList', checkAuthenticated, commentsListRouter);
 app.use((req, res, next) => {
   next();
   res.locals.user = req.user;
-  console.log(req.user);
   next();
 });
 

@@ -1,7 +1,8 @@
 document.write(`
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <div class="topnav" id="myTopnav">
-<a href="/">Profile</a>
+<a href="/">Timeline</a>
+<a href="/profile">Profile</a>
 <a href="/add">Add Post</a>
 
 <a class="right-only" id="target" href="/logout?_method=DELETE" >Log out</a>

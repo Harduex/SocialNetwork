@@ -17,8 +17,8 @@
         <% following.forEach(function(follower) { %>
         <li>
           <div class="profile-name">
-            <a href="/search?search=<%=follower%>" >
-              <p class="mobile-left clean-link"><b><%= follower %></b></p>
+            <a href="/search?search=<%=follower.username%>" >
+              <p class="mobile-left clean-link"><b><%= follower.username %></b></p>
             </a>
           </div>
         </li>

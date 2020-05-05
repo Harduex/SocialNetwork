@@ -85,6 +85,7 @@ input[type=submit]:hover {
 
 .post-div h1 {
   text-align: Left;
+  padding-top: 2%;
 }
 
 .post-img {
@@ -263,6 +264,10 @@ input[type=submit]:hover {
  /* Mobile view start */
   .mobile {
     width: 98%;
+  }
+
+  h1.mobile {
+    padding-top: 5%;
   }
   
   .mobile-username {

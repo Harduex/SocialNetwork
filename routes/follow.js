@@ -22,30 +22,38 @@ router.get('/', (request, response) => {
         //let incrementFollowing = { $inc: { following: 1 }, $push: { followedBy: currentUserName} };
         //let decrementFollowing = { $inc: { following: -1 }, $pull: { followedBy: currentUserName} };
 
-        let pushNewFollowing = { $push: { following: postUserName }};
-        let pushNewFollower = { $push: { followers: currentUserName}};
-        
-        let pullFollowing = { $pull: { following: postUserName }};
-        let pullFollower = { $pull: { followers: currentUserName}};
-        
+        let pushNewFollowing = { $push: { following: { username: postUserName, userid: postUserId } } };
+        let pushNewFollower = { $push: { followers: currentUserName } };
+
+        let pullFollowing = { $pull: { following: { username: postUserName, userid: postUserId } } };
+        let pullFollower = { $pull: { followers: currentUserName } };
+
 
         dbo.collection(currentUserId + '_info').find({ userid: currentUserId }).toArray(function (err, result) {
 
             var currentUserFollowing = result[0].following;
 
             if (currentUserFollowing === undefined) {
-                dbo.collection(postUserId + '_info').update( findByPostUserId, pushNewFollower );//ivan
-                dbo.collection(currentUserId + '_info').update( findByCurrentUserId, pushNewFollowing );//simeon
+                dbo.collection(postUserId + '_info').update(findByPostUserId, pushNewFollower);//ivan
+                dbo.collection(currentUserId + '_info').update(findByCurrentUserId, pushNewFollowing);//simeon
             } else {
 
-                if (currentUserFollowing.includes(postUserName)) {
-                    
+                var found = false;
+                for (var i = 0; i < currentUserFollowing.length; i++) {
+                    if (currentUserFollowing[i].username == postUserName) {
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (found) {
+
                     dbo.collection(postUserId + '_info').update(findByPostUserId, pullFollower);
                     dbo.collection(currentUserId + '_info').update(findByCurrentUserId, pullFollowing);
                 } else {
-                    
-                    dbo.collection(postUserId + '_info').update( findByPostUserId, pushNewFollower );
-                    dbo.collection(currentUserId + '_info').update( findByCurrentUserId, pushNewFollowing );
+
+                    dbo.collection(postUserId + '_info').update(findByPostUserId, pushNewFollower);
+                    dbo.collection(currentUserId + '_info').update(findByCurrentUserId, pushNewFollowing);
                 }
             }
 

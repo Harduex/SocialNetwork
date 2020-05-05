@@ -44,7 +44,7 @@ router.post('/', function (request, response) {
     });
     
 
-    response.redirect("/");
+    response.redirect("/profile");
 
 });
 

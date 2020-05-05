@@ -71,7 +71,7 @@ router.post('/', upload.single('image'), function (request, response) {
         });
     }
 
-    response.redirect("/");
+    response.redirect("/profile");
 
 });
 

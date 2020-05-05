@@ -1,7 +1,7 @@
 <html>
 
 <head>
-  <title>Profile</title>
+  <title>Posts</title>
   <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
 </head>
 
@@ -9,135 +9,81 @@
   <script src="javascripts/nav.js"></script>
   <br><br><br><br>
 
-  <div class="form-container">
-    <div class="post-div">
-      <a href="/changeProfilePic">
-        <img class="profile-pic" width="12%" src="users/<%=user.id%>/images/profilePic/image.jpg">
-      </a>
-      <h1 class="mobile"><%= user.username %> <a class="btn-edit" href="/editUser">&#9998;</a></h1>
-      <hr style="visibility: hidden;">
-      <div class="profile-name">
-        <p class="mobile-p-left"><b><%= user.description %></b></p>
-        <p class="mobile-p-right"><b>Posts:</b> <%= (content).length %></p>
-      </div>
+  <% content.forEach(function(post) { %>
+  <div class="post-div">
+    <div class="user-info mobile">
       <hr>
-
+      <img class="profile-pic" width="9%" src="users/<%=post.userid%>/images/profilePic/image.jpg">
       <div class="profile-name">
-
-        <form method="get" action="/followersList">
-          <input type="hidden" name="user_id" value="<%=user.id%>" />
-          <a href=""  class="clean-link">
-            <p onclick="this.closest('form').submit();return false;" class="mobile-p-left">
-              <b>Followers:</b> <%= (user.followers).length %>
-            </p>
-          </a>
-        </form>
-
-        <form method="get" action="/followingList">
-          <input type="hidden" name="user_id" value="<%=user.id%>" />
-          <a href=""  class="clean-link">
-            <p onclick="this.closest('form').submit();return false;" class="mobile-p-right">
-              <b>Following:</b> <%= (user.following).length %>
-            </p>
-          </a>
-        </form>
-
-      </div>
-
-      <div class="btn-conatiner">
-        <hr>
-        <form action="/add" method="get">
-          <input type="submit" name="add" value="add" class="mobile btn-sub input-div" />
-        </form>
-
-        <form action="/clear" method="post">
-          <input type="submit" name="clear" value="Clear all" class="mobile btn-sub input-div" />
-        </form>
-        <hr>
+        <a href="/search?search=<%=post.user%>">
+          <p class="clean-link"><b><%= post.user %></b></p>
+        </a>
       </div>
     </div>
 
-    <% content.reverse().forEach(function(post) { %>
-    <div class="post-div">
-      <div class="user-info mobile mobile-username">
-        <hr>
-        <img class="profile-pic" width="9%" src="users/<%=user.id%>/images/profilePic/image.jpg">
-        <div class="profile-name">
-          <p><b><%= user.username %></b></p>
-        </div>
-      </div>
-
-      <img class="lazy post-img" src="users/<%=user.id%>/images/<%=post.photo%>_small.jpg"
-        data-src="users/<%=user.id%>/images/<%=post.photo%>.jpg">
-      <br>
-      <div class="post-desc">
-        <p class="mobile"><b><%=post.description%></b></p>
-        <p class="mobile-p-left"><%= post.dateAdded %></p>
-        <br>
-      </div>
-      <hr>
-      <div class="profile-name">
-
+    <img class="lazy post-img" src="users/<%=post.userid%>/images/<%=post.photo%>_small.jpg"
+      data-src="users/<%=post.userid%>/images/<%=post.photo%>.jpg">
+    <br>
+    <br>
+    <div class="post-desc">
+      <p class="mobile"><b><%=post.description%></b></p>
+      <p class="mobile-p-left"><%= post.dateAdded %></p>
+    </div>
+    <hr>
+    <div class="profile-name">
+      <span class="mobile-p-right">
         <form method="get" action="/likesList">
           <input type="hidden" name="post_id" value="<%=post.postid%>" />
-          <input type="hidden" name="user_id" value="<%=user.id%>" />
-          <a href=""  class="clean-link">
-            <p onclick="this.closest('form').submit();return false;" class="mobile-p-right">
+          <input type="hidden" name="user_id" value="<%=post.userid%>" />
+          <a href="" class="clean-link">
+            <p onclick="this.closest('form').submit();return false;">
               <b>Likes:</b> <%= (post.likedBy).length %>
             </p>
           </a>
         </form>
-
+      </span>
+      <span class="mobile-p-left">
         <form method="get" action="/commentsList">
           <input type="hidden" name="post_id" value="<%=post.postid%>" />
-          <input type="hidden" name="user_id" value="<%=user.id%>" />
-          <a href=""  class="clean-link">
-            <p onclick="this.closest('form').submit();return false;" class="mobile-p-left">
+          <input type="hidden" name="user_id" value="<%=post.userid%>" />
+          <a href="" class="clean-link">
+            <p onclick="this.closest('form').submit();return false;">
               <b>Comments:</b> <%= (post.comments).length %>
             </p>
           </a>
         </form>
-      </div>
+      </span>
+    </div>
 
-      <div class="btn-conatiner">
-        <hr>
-        <form method="POST" action="/delete">
-          <input type="hidden" name="post_id" value="<%=post.postid%>" />
-          <input type="hidden" name="photo_name" value="<%=post.photo%>" />
-          <input type="submit" class="mobile input-div" value="Delete" />
-        </form>
 
-        <form method="get" action="/edit">
-          <input type="hidden" name="post_id" value="<%=post.postid%>" />
-          <input type="hidden" name="photo_name" value="<%=post.photo%>" />
-          <input type="hidden" name="post_description" value="<%=post.description%>" />
-          <input type="submit" class="mobile input-div" value="Edit" />
-        </form>
-        <hr>
-      </div>
+
+    <div class="btn-conatiner">
+      <hr>
+      <form method="get" action="/comment">
+        <input type="hidden" name="post_id" value="<%=post.postid%>" />
+        <input type="hidden" name="user_id" value="<%=post.userid%>" />
+        <input type="hidden" name="user_name" value="<%=post.user%>" id="usrname" />
+        <input type="submit" class="mobile input-div" value="Comment" />
+      </form>
+
+      <form method="get" action="/like">
+        <input type="hidden" name="post_id" value="<%=post.postid%>" />
+        <input type="hidden" name="user_id" value="<%=post.userid%>" id="usrId" />
+        <input type="hidden" name="user_name" value="<%=post.user%>" id="usrname" />
+        <input type="submit" id="like" class="mobile input-div" value="<%= post.likeStatus %>" />
+      </form>
+      <hr>
 
     </div>
-    <% }); %>
+
+  </div>
+  <% }); %>
 
   </div>
   <script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc="
     crossorigin="anonymous"></script>
 
   <script>
-    //  $(document).ready(() => {
-    //     $.ajax({
-    //       type: 'GET',
-    //       url: '/user',
-    //       success: (data) => {
-    //         console.log(data);
-    //       }
-    //     });
-    //  });
-  </script>
-
-
-  <script>
-    //lazyload();
     document.addEventListener("DOMContentLoaded", function () {
       var lazyloadImages = document.querySelectorAll("img.lazy");
       var lazyloadThrottleTimeout;

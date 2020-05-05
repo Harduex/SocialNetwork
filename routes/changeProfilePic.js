@@ -14,14 +14,14 @@ router.post('/', upload.single('profilePic'), function (request, response) {
     var userId = request.user.id;
 
     if (!request.file || !request.file.path) {
-        response.redirect("/");
+        response.redirect("/profile");
     } else {
         var img = fs.readFileSync(request.file.path);
         var Photo = img.toString('base64');
         fs.unlinkSync(request.file.path);
         functions.saveProfilePic(Photo, userId);
     }
-    response.redirect("/");
+    response.redirect("/profile");
 });
 
 

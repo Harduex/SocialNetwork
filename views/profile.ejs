@@ -1,7 +1,7 @@
 <html>
 
 <head>
-  <title>Posts</title>
+  <title>Profile</title>
   <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
 </head>
 
@@ -11,13 +11,13 @@
 
   <div class="form-container">
     <div class="post-div">
-      <img class="profile-pic" width="12%" src="users/<%=user.id%>/images/profilePic/image.jpg">
-      <h1 class="mobile"><%= user.username %></h1>
-      <br>
-      <br>
+      <a href="/changeProfilePic">
+        <img class="profile-pic" width="12%" src="users/<%=user.id%>/images/profilePic/image.jpg">
+      </a>
+      <h1 class="mobile"><%= user.username %> <a class="btn-edit" href="/editUser">&#9998;</a></h1>
       <hr style="visibility: hidden;">
       <div class="profile-name">
-        <p class="mobile-p-left"><b><%= userInfo.description %></b></p>
+        <p class="mobile-p-left"><b><%= user.description %></b></p>
         <p class="mobile-p-right"><b>Posts:</b> <%= (content).length %></p>
       </div>
       <hr>
@@ -28,7 +28,7 @@
             <input type="hidden" name="user_id" value="<%=user.id%>" />
             <a href="" class="clean-link">
               <p onclick="this.closest('form').submit();return false;">
-                <b>Followers:</b> <%= (userInfo.followers).length %>
+                <b>Followers:</b> <%= (user.followers).length %>
               </p>
             </a>
           </form>
@@ -38,7 +38,7 @@
             <input type="hidden" name="user_id" value="<%=user.id%>" />
             <a href="" class="clean-link">
               <p onclick="this.closest('form').submit();return false;">
-                <b>Following:</b> <%= (userInfo.following).length %>
+                <b>Following:</b> <%= (user.following).length %>
               </p>
             </a>
           </form>
@@ -47,11 +47,12 @@
 
       <div class="btn-conatiner">
         <hr>
-        <form action="/follow" method="get">
-          <input type="hidden" name="user_id" value="<%=user.id%>" />
-          <input type="hidden" name="user_name" value="<%=user.username%>" />
-          <input type="submit" name="follow" id="followingStatus" value="<%= userInfo.followingStatus %>"
-            class="mobile btn-sub input-div" />
+        <form action="/add" method="get">
+          <input type="submit" name="add" value="add" class="mobile btn-sub input-div" />
+        </form>
+
+        <form action="/clear" method="post">
+          <input type="submit" name="clear" value="Clear all" class="mobile btn-sub input-div" />
         </form>
         <hr>
       </div>
@@ -59,8 +60,7 @@
 
     <% content.reverse().forEach(function(post) { %>
     <div class="post-div">
-
-      <div class="user-info mobile">
+      <div class="user-info mobile mobile-username">
         <hr>
         <img class="profile-pic" width="9%" src="users/<%=user.id%>/images/profilePic/image.jpg">
         <div class="profile-name">
@@ -71,10 +71,10 @@
       <img class="lazy post-img" src="users/<%=user.id%>/images/<%=post.photo%>_small.jpg"
         data-src="users/<%=user.id%>/images/<%=post.photo%>.jpg">
       <br>
-      <br>
       <div class="post-desc">
         <p class="mobile"><b><%=post.description%></b></p>
         <p class="mobile-p-left"><%= post.dateAdded %></p>
+        <br>
       </div>
       <hr>
       <div class="profile-name">
@@ -102,25 +102,21 @@
         </span>
       </div>
 
-
-
       <div class="btn-conatiner">
         <hr>
-        <form method="get" action="/comment">
+        <form method="POST" action="/delete">
           <input type="hidden" name="post_id" value="<%=post.postid%>" />
-          <input type="hidden" name="user_id" value="<%=user.id%>" />
-          <input type="hidden" name="user_name" value="<%=user.username%>" id="usrname" />
-          <input type="submit" class="mobile input-div" value="Comment" />
+          <input type="hidden" name="photo_name" value="<%=post.photo%>" />
+          <input type="submit" class="mobile input-div" value="Delete" />
         </form>
 
-        <form method="get" action="/like">
+        <form method="get" action="/edit">
           <input type="hidden" name="post_id" value="<%=post.postid%>" />
-          <input type="hidden" name="user_id" value="<%=user.id%>" id="usrId" />
-          <input type="hidden" name="user_name" value="<%=user.username%>" id="usrname" />
-          <input type="submit" id="like" class="mobile input-div" value="<%= post.likeStatus %>" />
+          <input type="hidden" name="photo_name" value="<%=post.photo%>" />
+          <input type="hidden" name="post_description" value="<%=post.description%>" />
+          <input type="submit" class="mobile input-div" value="Edit" />
         </form>
         <hr>
-
       </div>
 
     </div>
@@ -130,28 +126,21 @@
   <script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc="
     crossorigin="anonymous"></script>
 
-  <!-- <script>
-    $(document).ready(() => {
-      $.ajax({
-        type: 'GET',
-        url: '/user/' + $('#usrId').val() + '/' + $('#usrname').val(),
-        success: (data) => {
-          console.log(data);
-          var followingStatus;
+  <script>
+    //  $(document).ready(() => {
+    //     $.ajax({
+    //       type: 'GET',
+    //       url: '/user',
+    //       success: (data) => {
+    //         console.log(data);
+    //       }
+    //     });
+    //  });
+  </script>
 
-
-          if (data.currnetUser.following.includes($('#usrname').val())) {
-            $('#followingStatus').val("Unfollow");
-          } else {
-            $('#followingStatus').val("follow");
-          }
-
-        }
-      });
-    });
-  </script> -->
 
   <script>
+    //lazyload();
     document.addEventListener("DOMContentLoaded", function () {
       var lazyloadImages = document.querySelectorAll("img.lazy");
       var lazyloadThrottleTimeout;
