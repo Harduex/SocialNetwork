@@ -19,7 +19,6 @@ initializePassport(
   id => users.find(user => user.id === id)
 );
 
-const functions = require('./functions');
 var indexRouter = require('./routes/index');
 var addRouter = require('./routes/add');
 var editRouter = require('./routes/edit');
@@ -34,7 +33,6 @@ var registrationRouter = require('./routes/register');
 var userRouter = require('./routes/user');
 var commentRouter = require('./routes/comment');
 var profileRouter = require('./routes/profile');
-
 var followersListRouter = require('./routes/followersList');
 var followingListRouter = require('./routes/followingList');
 var likesListRouter = require('./routes/likesList');

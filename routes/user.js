@@ -23,7 +23,7 @@ router.get('/:id/:user', function (request, response) {
 
             var usr = user[0];
 
-                response.json({ currnetUser: usr, posts: posts });
+                response.json({ currentUser: usr, posts: posts });
                 db.close();
             });
 

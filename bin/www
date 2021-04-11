@@ -12,8 +12,8 @@ var http = require('http');
  * Get port from environment and store in Express.
  */
 
-//Added from me
-const ip = '192.168.1.233';
+// Custom
+const ip = 'localhost';
 //
 
 var port = normalizePort(process.env.PORT || '3000');

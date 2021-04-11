@@ -8,7 +8,6 @@ var router = express.Router();
 // router.use(bodyParser.urlencoded({ extended: false }));
 // router.use(bodyParser.json());
 
-const functions = require('../functions');
 var multer = require('multer');
 fs = require('fs');
 const upload = multer({ dest: './public/temp' });
@@ -22,7 +21,7 @@ var Description;
 
 router.get('/', function (request, response) {
     response.render('editPost.ejs');
-    
+
     //Getting post id and photo name from url params
     postId = request.query.post_id;
     PhotoName = request.query.photo_name;
@@ -46,7 +45,7 @@ router.post('/', upload.single('image'), function (request, response) {
             var dbo = db.db('UsersData');
             var myquery = { postid: postId };
             var newvalues = { $set: { description: Description } };
-            dbo.collection(userId+'_posts').updateOne(myquery, newvalues, function (err, res) {
+            dbo.collection(userId + '_posts').updateOne(myquery, newvalues, function (err, res) {
                 if (err) throw err;
                 db.close();
             });
@@ -56,14 +55,14 @@ router.post('/', upload.single('image'), function (request, response) {
         var img = fs.readFileSync(request.file.path);
         var Photo = img.toString('base64');
         fs.unlinkSync(request.file.path);
-        functions.decode_save_base64(Photo, PhotoName + '.jpg', userId);
+        decode_save_base64(Photo, PhotoName + '.jpg', userId);
 
         MongoClient.connect(url, function (err, db) {
             if (err) throw err;
             var dbo = db.db('UsersData');
             var myquery = { postid: postId };
             var newvalues = { $set: { description: Description } };
-            dbo.collection(userId+'_posts').updateOne(myquery, newvalues, function (err, res) {
+            dbo.collection(userId + '_posts').updateOne(myquery, newvalues, function (err, res) {
                 if (err) throw err;
                 db.close();
             });
@@ -74,6 +73,32 @@ router.post('/', upload.single('image'), function (request, response) {
     response.redirect("/profile");
 
 });
+
+function decode_save_base64(base64str, filename, username) {
+    let buf = Buffer.from(base64str, 'base64');
+
+    let dir = `./public/users/${username}/images/`;
+
+    if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir);
+    }
+
+    let smallPhotoPath = dir + filename.replace(/(\.[\w\d_-]+)$/i, '_small$1');
+    let originalPhotoPath = dir + filename;
+
+    const sharp = require('sharp');
+
+    //Saving low quality photo
+    sharp(buf)
+        .resize(42)
+        .rotate()
+        .toFile(smallPhotoPath, (err, info) => { if (err) console.log(info); });
+
+    sharp(buf)
+        .resize(720)
+        .rotate()
+        .toFile(originalPhotoPath, (err, info) => { if (err) console.log(info); });
+}
 
 
 module.exports = router;
