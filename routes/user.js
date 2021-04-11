@@ -16,12 +16,11 @@ router.get('/:id/:user', function (request, response) {
         if (err) response.redirect('/');
         var dbo = db.db("UsersData");
 
-
         dbo.collection(request.user.id + '_info').find({}).toArray(function (err, user) {
 
             dbo.collection(request.params.id + '_posts').find({}).toArray(function (err, posts) {
 
-            var usr = user[0];
+                var usr = user[0];
 
                 response.json({ currentUser: usr, posts: posts });
                 db.close();
